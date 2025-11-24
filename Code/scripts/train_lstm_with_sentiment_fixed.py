@@ -7,7 +7,6 @@ import json
 from pathlib import Path
 import sys
 
-# Add parent directory to path
 sys.path.append(str(Path(__file__).parent.parent))
 from models.lstm.model import StockLSTM
 
@@ -26,9 +25,22 @@ class StockDatasetWithSentiment(Dataset):
         y = self.targets[idx + self.sequence_length]
         return X, y
 
+def safe_normalize(data, epsilon=1e-8):
+    """Normalize with protection against zero variance"""
+    mean = data.mean()
+    std = data.std()
+    
+    # If std is too small, don't normalize (just center)
+    if std < epsilon:
+        return data - mean
+    
+    return (data - mean) / std
+
 def train_epoch(model, train_loader, criterion, optimizer, device):
+    """Train for one epoch"""
     model.train()
     total_loss = 0
+    batch_count = 0
     
     for X_batch, y_batch in train_loader:
         X_batch = X_batch.to(device)
@@ -37,14 +49,26 @@ def train_epoch(model, train_loader, criterion, optimizer, device):
         optimizer.zero_grad()
         predictions = model(X_batch)
         loss = criterion(predictions.squeeze(), y_batch)
+        
+        # Check for NaN
+        if torch.isnan(loss):
+            print("    WARNING: NaN loss detected, skipping batch")
+            continue
+            
         loss.backward()
+        
+        # Gradient clipping to prevent explosion
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        
         optimizer.step()
         
         total_loss += loss.item()
+        batch_count += 1
     
-    return total_loss / len(train_loader)
+    return total_loss / max(batch_count, 1)
 
 def validate(model, val_loader, criterion, device):
+    """Validate the model"""
     model.eval()
     total_loss = 0
     
@@ -93,7 +117,7 @@ def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
     print("=" * 60)
-    print("LSTM TRAINING - WITH SENTIMENT FEATURES")
+    print("LSTM TRAINING - WITH SENTIMENT FEATURES (FIXED)")
     print("=" * 60)
     print("Configuration:")
     for key, value in config.items():
@@ -101,35 +125,88 @@ def main():
     print(f"Device: {device}")
     print("=" * 60)
     
-    # Load data
-    print("\nLoading data with sentiment features...")
-    df = pd.read_csv('data/processed/spy_features_with_sentiment.csv')
+    # Load data - try both possible filenames
+    data_files = [
+        'data/processed/spy_features_with_full_sentiment.csv',
+        'data/processed/spy_features_with_sentiment.csv'
+    ]
     
-    # Drop date and non-numeric columns
-    df = df.select_dtypes(include=[np.number])
+    df = None
+    for data_file in data_files:
+        try:
+            df = pd.read_csv(data_file)
+            print(f"\n✓ Loaded data from: {data_file}")
+            break
+        except FileNotFoundError:
+            continue
     
-    # Separate target (Close price) from features
+    if df is None:
+        print("\n✗ Error: Could not find sentiment data file!")
+        print("Expected files:")
+        for f in data_files:
+            print(f"  - {f}")
+        return
+    
+    print(f"  Total days: {len(df)}")
+    
+    # Separate target from features
     target_col = 'close'
-    feature_cols = [col for col in df.columns if col != target_col]
+    exclude_cols = ['Date', 'date', target_col]
+    feature_cols = [col for col in df.columns if col not in exclude_cols]
     
-    print(f"✓ Loaded {len(df)} days")
-    print(f"  Features: {len(feature_cols)}")
-    print(f"  Target: {target_col}")
+    print(f"  Total features: {len(feature_cols)}")
     
     # Check for sentiment features
-    sentiment_cols = [col for col in feature_cols if 'sentiment' in col.lower()]
-    print(f"  Sentiment features: {len(sentiment_cols)}")
+    sentiment_cols = [col for col in feature_cols if 'sentiment' in col.lower() or 'article' in col.lower() or 'positive' in col.lower() or 'negative' in col.lower()]
     if sentiment_cols:
+        print(f"  Sentiment features: {len(sentiment_cols)}")
         print(f"    {sentiment_cols}")
+    else:
+        print("  ⚠ No sentiment features found!")
     
-    # Normalize data
-    feature_mean = df[feature_cols].mean()
-    feature_std = df[feature_cols].std()
-    target_mean = df[target_col].mean()
-    target_std = df[target_col].std()
+    # Remove zero-variance features
+    feature_data = df[feature_cols]
+    stds = feature_data.std()
+    non_zero_var_cols = stds[stds > 1e-8].index.tolist()
     
-    features_normalized = (df[feature_cols] - feature_mean) / feature_std
-    targets_normalized = (df[target_col] - target_mean) / target_std
+    removed_cols = set(feature_cols) - set(non_zero_var_cols)
+    if removed_cols:
+        print(f"\n⚠ Removed {len(removed_cols)} zero-variance features:")
+        for col in sorted(removed_cols):
+            print(f"    {col}")
+    
+    feature_cols = non_zero_var_cols
+    print(f"  Active features: {len(feature_cols)}")
+    
+    # Check for NaN or Inf in raw data
+    if df[feature_cols].isnull().any().any():
+        print("\n⚠ NaN values found in features, filling with 0...")
+        df[feature_cols] = df[feature_cols].fillna(0)
+    
+    if np.isinf(df[feature_cols].values).any():
+        print("\n⚠ Infinite values found, clipping...")
+        df[feature_cols] = df[feature_cols].replace([np.inf, -np.inf], 0)
+    
+    # Normalize with safe method
+    print("\nNormalizing data...")
+    features_normalized = pd.DataFrame()
+    for col in feature_cols:
+        features_normalized[col] = safe_normalize(df[col])
+    
+    targets_normalized = safe_normalize(df[target_col])
+    
+    # Final check for NaN/Inf after normalization
+    if features_normalized.isnull().any().any():
+        print("\n✗ NaN values detected after normalization!")
+        nan_cols = features_normalized.columns[features_normalized.isnull().any()].tolist()
+        print(f"  Columns with NaN: {nan_cols}")
+        return
+    
+    if np.isinf(features_normalized.values).any():
+        print("\n✗ Infinite values detected after normalization!")
+        return
+    
+    print("✓ Data normalized successfully")
     
     # Create sequences
     features = features_normalized.values
@@ -139,6 +216,10 @@ def main():
     n = len(features) - config['sequence_length']
     train_size = int(n * config['train_split'])
     val_size = int(n * config['val_split'])
+    
+    print(f"\nCreating sequences...")
+    print(f"  Total data points: {len(features)}")
+    print(f"  Usable sequences: {n}")
     
     # Create datasets
     train_dataset = StockDatasetWithSentiment(
@@ -159,7 +240,7 @@ def main():
         config['sequence_length']
     )
     
-    print(f"\n✓ Created sequences:")
+    print(f"✓ Sequences created:")
     print(f"  Train: {len(train_dataset)}")
     print(f"  Val: {len(val_dataset)}")
     print(f"  Test: {len(test_dataset)}")
@@ -177,8 +258,12 @@ def main():
         dropout=config['dropout']
     ).to(device)
     
+    total_params = sum(p.numel() for p in model.parameters())
     print(f"\n✓ Model created:")
-    print(f"  Parameters: {sum(p.numel() for p in model.parameters()):,}")
+    print(f"  Input size: {len(feature_cols)}")
+    print(f"  Hidden size: {config['hidden_size']}")
+    print(f"  Num layers: {config['num_layers']}")
+    print(f"  Total parameters: {total_params:,}")
     
     # Loss and optimizer
     criterion = nn.MSELoss()
@@ -197,7 +282,7 @@ def main():
         train_loss = train_epoch(model, train_loader, criterion, optimizer, device)
         val_loss = validate(model, val_loader, criterion, device)
         
-        print(f"Epoch {epoch+1}/{config['epochs']}")
+        print(f"\nEpoch {epoch+1}/{config['epochs']}")
         print(f"  Train Loss: {train_loss:.6f}")
         print(f"  Val Loss: {val_loss:.6f}")
         
@@ -234,6 +319,9 @@ def main():
             actuals.extend(y_batch.numpy())
     
     # Denormalize
+    target_mean = df[target_col].mean()
+    target_std = df[target_col].std()
+    
     predictions = np.array(predictions).flatten() * target_std + target_mean
     actuals = np.array(actuals) * target_std + target_mean
     
@@ -255,6 +343,7 @@ def main():
         },
         'feature_count': len(feature_cols),
         'sentiment_features': sentiment_cols,
+        'removed_features': list(removed_cols),
         'train_samples': len(train_dataset),
         'val_samples': len(val_dataset),
         'test_samples': len(test_dataset)

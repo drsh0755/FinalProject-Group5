@@ -56,3 +56,11 @@ Thumbs.db
 *.log
 results/logs/*
 !results/logs/.gitkeep
+
+# Large data files
+*.zip
+*.csv.gz
+data/raw/news/kaggle*/
+data/raw/news/alphavantage_historical_news.csv
+data/raw/news/all_alphavantage_news.csv
+*.tar.gz
