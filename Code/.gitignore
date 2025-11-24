@@ -10,6 +10,10 @@ data/live/*
 !data/processed/.gitkeep
 !data/live/.gitkeep
 
+# EXCEPTION: Allow results JSON files (they're small and important)
+!results/*.json
+!results/**/*.json
+
 # API keys
 .env
 config.py
