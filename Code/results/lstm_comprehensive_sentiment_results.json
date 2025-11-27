@@ -1,0 +1,37 @@
+{
+  "config": {
+    "sequence_length": 30,
+    "hidden_size": 128,
+    "num_layers": 2,
+    "dropout": 0.2,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "epochs": 30,
+    "train_split": 0.7,
+    "val_split": 0.15,
+    "test_split": 0.15
+  },
+  "test_metrics": {
+    "mape": 7.741639832768282,
+    "mae": 51.56670432948148,
+    "rmse": 52.75151810253973
+  },
+  "feature_count": 51,
+  "sentiment_features": [
+    "sentiment_mean",
+    "sentiment_median",
+    "sentiment_weighted",
+    "sentiment_extreme",
+    "sentiment_min",
+    "sentiment_max",
+    "sentiment_std",
+    "article_count",
+    "positive_ratio"
+  ],
+  "train_samples": 295,
+  "val_samples": 63,
+  "test_samples": 64,
+  "training_time_seconds": 1.209815,
+  "best_epoch": 13,
+  "timestamp": "2025-11-26T05:03:08.813281"
+}

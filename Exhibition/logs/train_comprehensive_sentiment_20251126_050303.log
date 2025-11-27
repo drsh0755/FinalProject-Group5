@@ -1,0 +1,153 @@
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Log file: Exhibition/logs/train_comprehensive_sentiment_20251126_050303.log
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - TRAINING LSTM WITH COMPREHENSIVE SENTIMENT
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Log file: Exhibition/logs/train_comprehensive_sentiment_20251126_050303.log
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - DATA LOADING
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Loading comprehensive sentiment features...
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   ✓ Loaded 452 days of data
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   ✓ Columns: 53
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Feature breakdown:
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   Technical indicators: 42
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   Sentiment features: 9
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   Total expected: 51
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - CONFIGURATION
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Training Configuration:
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   sequence_length: 30
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   hidden_size: 128
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   num_layers: 2
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   dropout: 0.2000
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   batch_size: 32
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   learning_rate: 0.0010
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   epochs: 30
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   train_split: 0.7000
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   val_split: 0.1500
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   test_split: 0.1500
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - FEATURE PREPARATION
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Extracting features and target...
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   Feature shape: (452, 51)
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   Target shape: (452,)
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Normalizing features...
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   Feature normalization:
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -     Mean range: [-29.89, 1629319018.36]
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -     Std range: [0.0000, 620747682.7361]
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   Target normalization:
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -     Mean: $573.65
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -     Std: $52.96
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - SEQUENCE CREATION
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Creating sequences with length 30...
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   ✓ Created 422 sequences
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO -   ✓ Shape: (422, 30, 51)
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - DATA SPLITTING
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Train: 295 samples (70%)
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Val:   63 samples (15%)
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - Test:  64 samples (15%)
+2025-11-26 05:03:03 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - MODEL SETUP
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - Device: cuda
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - CUDA available: True
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - CUDA device: NVIDIA A10G
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - Converting to tensors...
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO -   ✓ Tensors created and moved to device
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - Creating model...
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO -   ✓ Model created
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO -     Total parameters: 235,137
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO -     Trainable parameters: 235,137
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO -     Model size: 0.90 MB
+2025-11-26 05:03:05 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:07 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:07 - train_comprehensive_sentiment - INFO - TRAINING
+2025-11-26 05:03:07 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:07 - train_comprehensive_sentiment - INFO - Starting training for 30 epochs...
+2025-11-26 05:03:07 - train_comprehensive_sentiment - INFO - Early stopping patience: 5
+2025-11-26 05:03:07 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch  1/30: Train Loss: 0.412837, Val Loss: 0.659260, Time: 0.7s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -          → New best model saved! (val_loss: 0.659260)
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch  2/30: Train Loss: 0.134395, Val Loss: 0.524435, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -          → New best model saved! (val_loss: 0.524435)
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch  3/30: Train Loss: 0.091878, Val Loss: 0.269412, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -          → New best model saved! (val_loss: 0.269412)
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch  4/30: Train Loss: 0.062997, Val Loss: 0.326491, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch  5/30: Train Loss: 0.048549, Val Loss: 0.234938, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -          → New best model saved! (val_loss: 0.234938)
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch  6/30: Train Loss: 0.050298, Val Loss: 0.208184, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -          → New best model saved! (val_loss: 0.208184)
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch  7/30: Train Loss: 0.054207, Val Loss: 0.271036, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch  8/30: Train Loss: 0.041171, Val Loss: 0.195021, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -          → New best model saved! (val_loss: 0.195021)
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch  9/30: Train Loss: 0.036472, Val Loss: 0.225190, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch 10/30: Train Loss: 0.032408, Val Loss: 0.209972, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch 11/30: Train Loss: 0.039542, Val Loss: 0.205378, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch 12/30: Train Loss: 0.035215, Val Loss: 0.242517, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch 13/30: Train Loss: 0.035846, Val Loss: 0.149523, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -          → New best model saved! (val_loss: 0.149523)
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch 14/30: Train Loss: 0.031310, Val Loss: 0.195215, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch 15/30: Train Loss: 0.026935, Val Loss: 0.194106, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch 16/30: Train Loss: 0.029351, Val Loss: 0.180673, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch 17/30: Train Loss: 0.031441, Val Loss: 0.190566, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Epoch 18/30: Train Loss: 0.027423, Val Loss: 0.187139, Time: 0.0s
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Early stopping triggered at epoch 18
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Best validation loss: 0.149523
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Training completed in 1.2 seconds (0.0 minutes)
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - TEST EVALUATION
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Loading best model...
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Running predictions on test set...
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Denormalizing predictions...
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Computing metrics...
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - TEST RESULTS
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - MAE:  $51.57
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - RMSE: $52.75
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - MAPE: 7.74%
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - COMPARISON WITH PREVIOUS MODEL
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Previous (4 sentiment features):  7.87% MAPE
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Current (9 sentiment features):   7.74% MAPE
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ✅ IMPROVEMENT: 0.13 percentage points (1.6% better)
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - SAVING RESULTS
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ✓ Results saved: Code/results/lstm_comprehensive_sentiment_results.json
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ✓ Model saved: Code/models/checkpoints/lstm_comprehensive_sentiment_best.pth
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - TRAINING COMPLETE
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - ============================================================
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - Next steps:
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -   1. Analyze results:
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -      python3 Code/scripts/analyze_comprehensive_results.py
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -   2. Compare with baseline:
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO -      python3 Code/scripts/compare_all_models.py
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 
+2025-11-26 05:03:08 - train_comprehensive_sentiment - INFO - 📊 Full log saved: Exhibition/logs/train_comprehensive_sentiment_20251126_050303.log

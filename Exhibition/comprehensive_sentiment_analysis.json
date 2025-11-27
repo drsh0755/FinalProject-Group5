@@ -1,0 +1,27 @@
+{
+  "models": {
+    "Baseline (No Sentiment)": {
+      "mape": 52.306209564208984,
+      "features": 42,
+      "sentiment": 0
+    },
+    "Simple Sentiment": {
+      "mape": 7.874623341412051,
+      "features": 46,
+      "sentiment": 4
+    },
+    "Comprehensive Sentiment": {
+      "mape": 7.741639832768282,
+      "features": 51,
+      "sentiment": 9
+    }
+  },
+  "improvements": {
+    "baseline_to_4_features": 44.43158622279693,
+    "baseline_to_9_features": 44.5645697314407,
+    "4_to_9_features": 0.13298350864376918
+  },
+  "best_model": "Comprehensive Sentiment",
+  "best_mape": 7.741639832768282,
+  "timestamp": "2025-11-26T05:04:32.726474"
+}
