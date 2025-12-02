@@ -38,12 +38,12 @@ config = {
     'sequence_length': 30,
     'hidden_size': 64,  # Reduced from 128 for better generalization
     'num_layers': 2,
-    'dropout': 0.3,  # Increased from 0.2 for more regularization
+    'dropout': 0.4,  # Increased from 0.2 for more regularization
     'batch_size': 16,  # Smaller batches = better generalization
     'learning_rate': 0.0005,  # Lower LR for stable convergence
-    'weight_decay': 0.0001,  # L2 regularization
+    'weight_decay': 0.001,  # L2 regularization
     'epochs': 100,
-    'early_stopping_patience': 15,
+    'early_stopping_patience': 50,
     'gradient_clip': 1.0,
     'train_split': 0.7,
     'val_split': 0.15,
@@ -400,10 +400,10 @@ for epoch in range(config['epochs']):
         patience_counter = 0
 
         # Create results directory if it doesn't exist
-        os.makedirs('Code/results', exist_ok=True)
+        os.makedirs('Code/models', exist_ok=True)
 
         # Save best model
-        torch.save(model.state_dict(), 'Code/results/lstm_model_sentiment.pt')
+        torch.save(model.state_dict(), 'Code/models/lstm_model_sentiment.pt')
 
         if (epoch + 1) % 10 == 0 or epoch == 0:
             print(f"                  ✓ New best model saved (val_loss: {val_loss:.6f})")
@@ -429,7 +429,7 @@ print("=" * 80 + "\n")
 
 print("   Loading best model...")
 try:
-    model.load_state_dict(torch.load('Code/results/lstm_model_sentiment.pt'))
+    model.load_state_dict(torch.load('Code/models/lstm_model_sentiment.pt'))
     print("   ✓ Best model loaded")
 except:
     print("   ⚠️  Could not load best model, using current weights")
@@ -541,7 +541,7 @@ print(" " * 25 + "💾 SAVING RESULTS")
 print("=" * 80 + "\n")
 
 # Create results directory
-os.makedirs('Code/results', exist_ok=True)
+os.makedirs('Code/models', exist_ok=True)
 
 results = {
     'model_info': {
@@ -609,7 +609,7 @@ with open(results_file, 'w') as f:
 print(f"   ✓ Results saved: {results_file}")
 
 # Save model
-model_file = 'Code/results/lstm_model_sentiment.pt'
+model_file = 'Code/models/lstm_model_sentiment.pt'
 print(f"   ✓ Model saved: {model_file}")
 
 # ============================================================
@@ -631,10 +631,5 @@ print("\n   📁 FILES CREATED:")
 print(f"      Model:   Code/results/lstm_model_sentiment.pt")
 print(f"      Results: Code/results/lstm_sentiment_results.json")
 
-print("\n   ✅ NEXT STEPS:")
-print(f"      1. Review results in Code/results/lstm_sentiment_results.json")
-print(f"      2. Commit changes to git")
-print(f"      3. Update presentation with new MAPE: {test_mape:.3f}%")
-print(f"      4. Submit by December 8, 2025")
 
 print("\n" + "=" * 80 + "\n")
