@@ -1,166 +1,48 @@
-# Multi-Modal Stock Market Prediction System
-## DATS 6303 Deep Learning - Final Project - Group 5
+# Deep Learning Final Project - Group 5
+**Multi-Modal LSTM Stock Market Prediction**
 
-**Team Members:** 
-- Adarsh Singh
-- Venkatesh Nagarjuna
-- Mayur Patil
+## Team
+- Adarsh, Venkatesh Nagarjuna, Mayur Patil
+- Instructor: Dr. Amir Jafari
+- Course: DATS 6303 - Deep Learning
+- Due: December 8, 2025
 
-**Instructor:** Dr. Amir Jafari  
-**Semester:** Fall 2025
+## Overview
+Multi-modal LSTM for SPY prediction using 43 features (36 technical + 7 sentiment)
 
-DATS6303– Deep Learning | Final Project | Fall 2025
+**Performance:** 7.87% MAPE (target: <15%)
 
-
----
-
-## Project Overview
-
-This project implements a multi-modal deep learning system for stock market prediction that integrates:
-- **LSTM Networks** for technical analysis of historical price data
-- **FinBERT Transformer** for financial news sentiment analysis
-- **Dense Networks** for market context integration
-
-The system performs both historical backtesting and real-time prediction capabilities.
-
----
-
-## Repository Structure
-```
-FinalProject-Group5/
-├── Group-Proposal/
-│   └── proposal.pdf                    # Project proposal
-├── Final-Group-Project-Report/
-│   └── (Final report - Due Dec 8)
-├── Final-Group-Presentation/
-│   └── (Presentation slides - Due Dec 8)
-├── Code/                               # Main codebase
-│   ├── data/                          # Data storage
-│   │   ├── raw/                       # Raw downloaded data
-│   │   ├── processed/                 # Preprocessed data
-│   │   └── live/                      # Live prediction data
-│   ├── models/                        # Model implementations
-│   │   ├── lstm/                      # LSTM model code
-│   │   ├── sentiment/                 # FinBERT sentiment code
-│   │   ├── fusion/                    # Fusion network code
-│   │   └── checkpoints/               # Saved model weights
-│   ├── notebooks/                     # Jupyter notebooks for EDA
-│   ├── scripts/                       # Executable scripts
-│   ├── utils/                         # Helper functions
-│   ├── results/                       # Outputs
-│   │   ├── figures/                   # Plots and visualizations
-│   │   ├── predictions/               # Prediction results
-│   │   └── logs/                      # Training logs
-│   ├── requirements.txt               # Python dependencies
-│   └── README.md                      # Code documentation
-├── adarsh-singh-individual-project/
-│   ├── Individual-Final-Project-Report/
-│   └── Code/                          # Individual contributions
-├── venkatesh-nagarjuna-individual-project/
-│   ├── Individual-Final-Project-Report/
-│   └── Code/
-└── mayur-patil-individual-project/
-    ├── Individual-Final-Project-Report/
-    └── Code/
-```
-
----
-
-## Setup Instructions
-
-### 1. Clone Repository
-```bash
-git clone https://github.com/drsh0755/FinalProject-Group5.git
-cd FinalProject-Group5/Code
-```
-
-### 2. Create Virtual Environment
-```bash
-python -m venv venv
-source venv/bin/activate  # Mac/Linux
-# OR
-venv\Scripts\activate     # Windows
-```
-
-### 3. Install Dependencies
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-### 4. Setup API Keys
-Create a `.env` file in the `Code/` directory:
-```bash
-ALPHA_VANTAGE_KEY=your_alpha_vantage_key_here
-NEWS_API_KEY=your_news_api_key_here  # Optional
-```
-
-### 5. Verify Installation
-```bash
-python -c "import torch; print('PyTorch:', torch.__version__)"
-python -c "import transformers; print('Transformers:', transformers.__version__)"
-```
-
----
-
-## Data Sources
-
-1. **Historical Stock Prices:** Alpha Vantage API
-2. **Financial News:** Kaggle Daily Financial News Dataset
-3. **Market Indices:** Yahoo Finance (SPY, QQQ, DIA, VIX)
-
----
-
-## Project Timeline
-
-| Phase | Dates | Tasks |
-|-------|-------|-------|
-| **Phase 1: Development** | Nov 17-24 | Historical data processing, model development |
-| **Phase 2: Live Deployment** | Nov 25-Dec 1 | Real-time predictions, daily monitoring |
-| **Phase 3: Documentation** | Dec 2-8 | Final report, presentation, submission |
-
----
-
-## Running the Code
-
-### Data Collection
+## Quick Start
 ```bash
 cd Code
-python scripts/download_data.py
+source venv/bin/activate
+python scripts/01_download_data.py
+python scripts/02_download_news.py
+python scripts/03_create_technical_features.py
+python scripts/04_merge_features.py
+python scripts/05_train_model.py
+python scripts/06_live_prediction.py
+python scripts/07_verify_predictions.py
 ```
 
-### Model Training
-```bash
-python scripts/train_lstm.py
-python scripts/train_sentiment.py
-python scripts/train_fusion.py
-```
+## Structure
+- Code/scripts/ - Production pipeline (7 scripts)
+- Code/data/ - Stock & news data (4 files)
+- Code/models/ - Trained LSTM
+- Code/results/ - 7.87% MAPE results
+- Documentation/ - Reports & slides
+- archive/ - Experimental code
 
-### Live Predictions
-```bash
-python scripts/live_predict.py
-```
+## Data Pipeline
+1. Stock data (Yahoo Finance, 407 days)
+2. News data (Alpha Vantage, 25K+ articles)
+3. Technical features (36 indicators)
+4. Sentiment features (7 aggregations)
+5. Training data (43 features, 407 samples)
 
----
+## Model
+- 2-layer LSTM, 128 hidden units
+- Dropout: 0.4, Sequence: 60 days
+- Parameters: 232,577
 
-## Results
-
-Results will be available in `Code/results/`:
-- Training curves and metrics in `figures/`
-- Daily predictions in `predictions/`
-- Model performance logs in `logs/`
-
----
-
-## Contact
-
-For questions or issues, contact:
-- Adarsh Singh: adarsh.singh@gwu.edu
-- Venkatesh Nagarjuna: venkatesh.nagarjuna@gwu.edu
-- Mayur Patil: mayur.patil@gwu.edu
-
----
-
-## License
-
-This project is submitted as coursework for DATS 6303 at George Washington University.
+See Documentation/ for complete reports.

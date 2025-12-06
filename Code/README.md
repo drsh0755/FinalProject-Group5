@@ -1,109 +1,247 @@
-# Code Directory Documentation
+# Code Directory
+**Multi-Modal LSTM Stock Market Prediction - Production Code**
 
-## Directory Structure
+## 🚀 Quick Start
+
+### Setup Environment
+```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate (Linux/Mac)
+source venv/bin/activate
+
+# Activate (Windows)
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Configure API Keys
+```bash
+# Set Alpha Vantage API key
+export ALPHA_VANTAGE_API_KEY="your_key_here"
+
+# Or create .env file
+echo "ALPHA_VANTAGE_API_KEY=your_key_here" > .env
+```
+
+## 📊 Production Pipeline
+
+Run these scripts in order:
+
+### 1️⃣ Download Data
+```bash
+cd scripts
+python 01_download_data.py
+```
+**Purpose:** Fetches latest SPY stock data and financial news from Alpha Vantage  
+**Output:** `data/raw/spy_data.csv`, `data/raw/news_data.json`  
+**Time:** ~2-3 minutes
+
+### 2️⃣ Create Features
+```bash
+python 02_create_features.py
+```
+**Purpose:** Generates 43 features (36 technical + 7 sentiment)  
+**Input:** Raw stock and news data  
+**Output:** `data/processed/features.csv`  
+**Time:** ~5 minutes
+
+### 3️⃣ Train Model
+```bash
+python 03_train_model.py
+```
+**Purpose:** Trains multi-modal LSTM model  
+**Input:** Processed features  
+**Output:** `models/lstm_model_sentiment.pt`, training logs  
+**Time:** ~15-30 minutes (with GPU)
+
+### 4️⃣ Evaluate Model
+```bash
+python 04_evaluate.py
+```
+**Purpose:** Evaluates model performance  
+**Input:** Trained model, test data  
+**Output:** `results/lstm_comprehensive_sentiment_results.json`  
+**Metrics:** MAPE, MAE, direction accuracy
+
+### 4️⃣b Create Plots
+```bash
+python 04b_create_plots.py
+```
+**Purpose:** Creates visualization plots for presentation  
+**Input:** Results and predictions  
+**Output:** `results/figures/*.png`
+
+### 5️⃣ Live Prediction
+```bash
+python 05_live_prediction.py
+```
+**Purpose:** Generates real-time SPY price predictions  
+**Input:** Latest data, trained model  
+**Output:** Live prediction with confidence intervals
+
+## 📁 Directory Structure
 ```
 Code/
-├── data/                   # Data storage (not tracked in git)
-│   ├── raw/               # Raw downloaded data
-│   ├── processed/         # Preprocessed, model-ready data
-│   └── live/              # Live prediction data and logs
-├── models/                # Model implementations
-│   ├── lstm/              # LSTM architecture and training
-│   ├── sentiment/         # FinBERT sentiment analysis
-│   ├── fusion/            # Multi-modal fusion network
-│   └── checkpoints/       # Saved model weights
-├── notebooks/             # Jupyter notebooks
-├── scripts/               # Executable Python scripts
-├── utils/                 # Helper functions and utilities
-└── results/               # Outputs and visualizations
+├── scripts/                    # Production pipeline
+│   ├── 01_download_data.py    # Data fetching
+│   ├── 02_create_features.py  # Feature engineering
+│   ├── 03_train_model.py      # Model training
+│   ├── 04_evaluate.py         # Performance evaluation
+│   ├── 04b_create_plots.py    # Visualization
+│   ├── 05_live_prediction.py  # Live predictions
+│   └── [supporting scripts]   # Utilities
+│
+├── models/                     # Model architecture
+│   └── lstm/
+│       ├── model.py           # LSTM model definition
+│       └── dataset.py         # Dataset loader
+│
+├── data/                       # Data storage
+│   ├── raw/                   # Raw downloaded data
+│   ├── processed/             # Processed features
+│   └── live/                  # Live prediction data
+│
+├── results/                    # Outputs
+│   ├── figures/               # Visualization plots
+│   ├── logs/                  # Training logs
+│   └── *.json                 # Results files
+│
+├── notebooks/                  # Jupyter notebooks
+│   └── 01_data_exploration.ipynb
+│
+├── utils/                      # Utility functions
+│   ├── config.py              # Configuration
+│   └── logger.py              # Logging utilities
+│
+├── requirements.txt            # Python dependencies
+└── README.md                   # This file
 ```
 
-## Scripts Overview
+## 🔧 Supporting Scripts
 
-### Data Scripts (`scripts/`)
-- `download_data.py` - Download historical stock and news data
-- `preprocess_data.py` - Clean and prepare data for models
-- `create_features.py` - Generate technical indicators
+### Alternative Data Sources
+- `download_data.py` - Alternative data fetcher
+- `create_features.py` - Alternative feature generator
 
-### Model Scripts
-- `train_lstm.py` - Train LSTM on technical indicators
-- `train_sentiment.py` - Run FinBERT sentiment analysis
-- `train_fusion.py` - Train multi-modal fusion model
-- `evaluate_models.py` - Generate performance metrics
+### Utilities
+- `merge_sentiment_with_features.py` - Merge sentiment with technical features
+- `retrain_lstm_model.py` - Retrain existing model
+- `live_prediction_demo.py` - Demo version of live predictions
 
-### Deployment Scripts
-- `live_predict.py` - Generate daily predictions
-- `fetch_live_data.py` - Collect real-time data
+## 📦 Dependencies
 
-## Usage Examples
+Main packages (see `requirements.txt` for complete list):
+- `torch` - PyTorch for deep learning
+- `pandas` - Data manipulation
+- `numpy` - Numerical computing
+- `transformers` - FinBERT sentiment analysis
+- `yfinance` - Stock data (backup source)
+- `ta` - Technical analysis indicators
+- `matplotlib` - Plotting
+- `scikit-learn` - Preprocessing and metrics
 
-### 1. Initial Setup
+## 🧪 Testing
+
+### Test Imports
 ```bash
-# Download historical data
-python scripts/download_data.py --start 2025-05-01 --end 2025-11-17
-
-# Preprocess data
-python scripts/preprocess_data.py --input data/raw --output data/processed
+python -c "from models.lstm.model import *; print('✓ Model OK')"
+python -c "from models.lstm.dataset import *; print('✓ Dataset OK')"
+python -c "from utils.config import *; print('✓ Config OK')"
 ```
 
-### 2. Training Models
+### Test Pipeline Components
 ```bash
-# Train LSTM
-python scripts/train_lstm.py --epochs 50 --batch-size 32
-
-# Run sentiment analysis
-python scripts/train_sentiment.py --dataset data/processed/news.csv
-
-# Train fusion model
-python scripts/train_fusion.py --lstm-checkpoint models/checkpoints/lstm_best.pth
+cd scripts
+python 01_download_data.py --test  # Test data fetching
+python 02_create_features.py --test  # Test feature creation
 ```
 
-### 3. Live Predictions
-```bash
-# Run daily prediction (schedule for 4 PM EST)
-python scripts/live_predict.py --save-results data/live/predictions.csv
-```
+## ⚙️ Configuration
 
-## Configuration
+### Environment Variables
+- `ALPHA_VANTAGE_API_KEY` - API key for Alpha Vantage (required)
+- `MODEL_PATH` - Custom model path (optional)
+- `DATA_PATH` - Custom data path (optional)
 
-Edit hyperparameters and settings in `utils/config.py`:
-- Model architectures
+### Config File
+Edit `utils/config.py` to customize:
+- Data sources
+- Model hyperparameters
+- Feature selection
 - Training parameters
-- API endpoints
-- File paths
 
-## Troubleshooting
+## 📊 Model Details
 
-### Common Issues
+### Architecture
+- **Input:** 60-day sequence of 43 features
+- **LSTM Layers:** 2 layers × 128 units
+- **Dropout:** 0.2
+- **Output:** Next day SPY price prediction
 
-**Import errors:**
+### Training
+- **Optimizer:** Adam (lr=0.001)
+- **Loss:** MSE
+- **Batch Size:** 32
+- **Epochs:** 100 (with early stopping)
+- **Device:** CUDA if available, else CPU
+
+### Performance
+- **MAPE:** 7.87%
+- **MAE:** $32.54
+- **Direction Accuracy:** 68.2%
+
+## 🚨 Troubleshooting
+
+### Import Errors
 ```bash
-pip install -r requirements.txt --upgrade
+# Ensure virtual environment is activated
+source venv/bin/activate
+
+# Reinstall requirements
+pip install -r requirements.txt
 ```
 
-**CUDA not available:**
-- Models will run on CPU (slower but functional)
-- Check: `python -c "import torch; print(torch.cuda.is_available())"`
-
-**API rate limits:**
-- Alpha Vantage: 25 calls/day (free tier)
-- Use cached data in `data/raw/` when possible
-
-## Testing
-
-Run unit tests:
+### CUDA/GPU Issues
 ```bash
-python -m pytest tests/
+# Check CUDA availability
+python -c "import torch; print(torch.cuda.is_available())"
+
+# If False, model will run on CPU (slower but functional)
 ```
 
-## Code Style
+### API Rate Limits
+- Alpha Vantage: 5 requests/minute, 500 requests/day
+- Solution: Use cached data or implement rate limiting
 
-This project follows PEP 8 style guidelines:
-```bash
-# Format code
-black scripts/ models/ utils/
+### Data Alignment Issues
+- See `../docs/DATA_ALIGNMENT_FIX.md` for details
+- Ensure news data matches stock data time period
 
-# Check style
-flake8 scripts/ models/ utils/
-```
-EOF
+## 📝 Development Notes
+
+### Adding New Features
+1. Edit `02_create_features.py`
+2. Add feature calculation
+3. Update feature count in `models/lstm/model.py`
+4. Retrain model with `03_train_model.py`
+
+### Modifying Model
+1. Edit `models/lstm/model.py`
+2. Adjust architecture as needed
+3. Update configuration in `utils/config.py`
+4. Retrain and evaluate
+
+## 📞 Support
+
+- **Documentation:** `../docs/` folder
+- **Issues:** See `CURRENT_STATUS.md` for known issues
+- **Team:** Contact via GWU email or Git branches
+
+---
+
+**Last Updated:** December 6, 2025  
+**Status:** Production Ready ✅

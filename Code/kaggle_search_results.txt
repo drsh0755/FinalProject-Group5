@@ -1,5 +1,0 @@
-ref                                                    title                                                    size  lastUpdated                 downloadCount  voteCount  usabilityRating  
------------------------------------------------------  -------------------------------------------------  ----------  --------------------------  -------------  ---------  ---------------  
-triagungj/cnbc-indonesia-stock-news-sentiment-dataset  CNBC Indonesia Stock News Sentiment (2024-2025Q1)      254023  2025-07-28 19:50:20.953000             38          2  0.7647059        
-elidle/cnn-indonesia-economy-news-article-headlines    CNN Indonesia Economy News Article Headlines          2246189  2025-07-02 03:16:33.340000             39          0  0.64705884       
-farukece/semi-conductor-dataset                        Top Semiconductor Companies by Market Capital            4354  2025-08-04 01:10:27.600000             73          5  0.7647059        

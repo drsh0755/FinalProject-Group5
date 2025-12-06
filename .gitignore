@@ -1,5 +1,56 @@
-# macOS
-.DS_Store
+# Virtual Environment
+Code/venv/
+venv/
+env/
+.venv/
 
-# PyCharm / IntelliJ
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data (large files)
+*.csv
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+
+# Models (large files - use Git LFS if needed)
+*.pt
+*.pth
+*.onnx
+
+# IDE
+.vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/*.log
+
+# Environment variables
+.env
+.env.local
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# Backup files
+*~
+*.bak
