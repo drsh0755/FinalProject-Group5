@@ -73,21 +73,27 @@ print("\n📊 LOADING DATA")
 print("-" * 80)
 
 try:
-    data = pd.read_csv('Code/data/processed/spy_features_with_sentiment.csv')
-    print(f"   ✓ Loaded: Code/data/processed/spy_features_with_sentiment.csv")
+    data = pd.read_csv('Code/data/processed/qqq_features_with_sentiment.csv')
+    print(f"   ✓ Loaded: Code/data/processed/qqq_features_with_sentiment.csv")
 except FileNotFoundError:
     print(f"   ✗ ERROR: File not found!")
-    print(f"   Expected: Code/data/processed/spy_features_with_sentiment.csv")
+    print(f"   Expected: Code/data/processed/qqq_features_with_sentiment.csv")
     exit(1)
 
 data['Date'] = pd.to_datetime(data['Date'])
+
+# --- ADDED FILTER ---
+cutoff_date = '2025-11-26'
+print(f"   ✂️  Filtering data to end on {cutoff_date}...")
+data = data[data['Date'] <= cutoff_date].copy()
+# --------------------
 
 print(f"   Total records: {len(data)}")
 print(f"   Date range: {data['Date'].min().date()} → {data['Date'].max().date()}")
 print(f"   Total columns: {len(data.columns)}")
 
 # Check for required columns
-required_cols = ['Date', 'Close']
+required_cols = ['Date', 'close']
 missing_cols = [col for col in required_cols if col not in data.columns]
 if missing_cols:
     print(f"   ✗ ERROR: Missing required columns: {missing_cols}")
@@ -96,8 +102,8 @@ if missing_cols:
 print(f"   ✓ All required columns present")
 
 # Prepare features and target
-X = data.drop(['Date', 'Close'], axis=1).values
-y = data['Close'].values
+X = data.drop(['Date', 'close'], axis=1).values
+y = data['close'].values
 
 print(f"   Features shape: {X.shape}")
 print(f"   Target shape: {y.shape}")
@@ -403,7 +409,7 @@ for epoch in range(config['epochs']):
         os.makedirs('Code/models', exist_ok=True)
 
         # Save best model
-        torch.save(model.state_dict(), 'Code/models/lstm_model_sentiment.pt')
+        torch.save(model.state_dict(), 'Code/models/lstm_model_sentiment_QQQ.pt')
 
         if (epoch + 1) % 10 == 0 or epoch == 0:
             print(f"                  ✓ New best model saved (val_loss: {val_loss:.6f})")
@@ -429,7 +435,7 @@ print("=" * 80 + "\n")
 
 print("   Loading best model...")
 try:
-    model.load_state_dict(torch.load('Code/models/lstm_model_sentiment.pt'))
+    model.load_state_dict(torch.load('Code/models/lstm_model_sentiment_QQQ.pt'))
     print("   ✓ Best model loaded")
 except:
     print("   ⚠️  Could not load best model, using current weights")
@@ -602,14 +608,14 @@ results = {
 }
 
 # Save results JSON
-results_file = 'Code/results/lstm_sentiment_results.json'
+results_file = 'Code/results/lstm_sentiment_results_QQQ.json'
 with open(results_file, 'w') as f:
     json.dump(results, f, indent=2)
 
 print(f"   ✓ Results saved: {results_file}")
 
 # Save model
-model_file = 'Code/models/lstm_model_sentiment.pt'
+model_file = 'Code/models/lstm_model_sentiment_QQQ.pt'
 print(f"   ✓ Model saved: {model_file}")
 
 # ============================================================
@@ -628,8 +634,8 @@ print(f"      Training time: {training_time / 60:.1f} minutes")
 print(f"      Device: {device}")
 
 print("\n   📁 FILES CREATED:")
-print(f"      Model:   Code/models/lstm_model_sentiment.pt")
-print(f"      Results: Code/results/lstm_sentiment_results.json")
+print(f"      Model:   Code/models/lstm_model_sentiment_QQQ.pt")
+print(f"      Results: Code/results/lstm_sentiment_results_QQQ.json")
 
 
 print("\n" + "=" * 80 + "\n")

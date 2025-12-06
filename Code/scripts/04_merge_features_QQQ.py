@@ -5,7 +5,7 @@ import numpy as np
 print("📊 Merging sentiment data with technical features...")
 
 # Load news
-news = pd.read_csv('Code/data/processed/alphavantage_news_2024_2025.csv')
+news = pd.read_csv('Code/data/processed/alphavantage_news_QQQ_2024_2025.csv')
 news['date'] = pd.to_datetime(news['date'], format='%Y%m%d')
 
 print(f"   Loaded {len(news)} articles")
@@ -28,7 +28,7 @@ sentiment_daily['positive_ratio'] = news.groupby(news['date'].dt.date)['sentimen
 sentiment_daily['date'] = pd.to_datetime(sentiment_daily['date'])
 
 # Load stock features
-features = pd.read_csv('Code/data/processed/spy_features_2year.csv')
+features = pd.read_csv('Code/data/processed/qqq_features_2year.csv')
 features['Date'] = pd.to_datetime(features['Date'])
 
 print(f"   Loaded {len(features)} stock records")
@@ -56,9 +56,9 @@ print(f"   article_count: min={merged['article_count'].min():.0f}, max={merged['
 print(f"   positive_ratio: min={merged['positive_ratio'].min():.3f}, max={merged['positive_ratio'].max():.3f}")
 
 # Save
-merged.to_csv('Code/data/processed/spy_features_with_sentiment.csv', index=False)
+merged.to_csv('Code/data/processed/qqq_features_with_sentiment.csv', index=False)
 
 print(f"\n✅ Sentiment features merged!")
 print(f"   Rows: {len(merged)}")
 print(f"   Columns: {len(merged.columns)}")
-print(f"   Saved to: Code/data/processed/spy_features_with_sentiment.csv")
+print(f"   Saved to: Code/data/processed/qqq_features_with_sentiment.csv")
