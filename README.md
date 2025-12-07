@@ -581,8 +581,7 @@ If you use this code in your research, please cite:
 @software{stock_direction_forecasting_2025,
   title={Stock Direction Forecasting with Temporal Fusion Transformer and DDG-DA},
   author={Venkatesh Nagarjuna},
-  year={2025},
-  url={https://github.com/yourusername/stock-direction-forecasting}
+  year={2025}
 }
 ```
 
@@ -619,12 +618,11 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 
 ## Contact
 
-- **Author**: Your Name
-- **Email**: your.email@example.com
-- **GitHub**: [@yourusername](https://github.com/yourusername)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/stock-direction-forecasting/issues)
+- **Author**: Venkatesh
+- **Email**: venkateshbn98@gmail.com
+- **GitHub**: [@asbetos](https://github.com/Asbetos)
 
 ***
 
-**Built with ❤️ using PyTorch and optimized for NVIDIA A10 GPUs**
+**Built with ❤️ using PyTorch
 
