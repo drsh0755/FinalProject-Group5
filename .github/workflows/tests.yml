@@ -1,0 +1,83 @@
+name: Python Tests & Deployment
+
+on:
+  push:
+    branches: [ mayur, main, develop ]
+  pull_request:
+    branches: [ mayur, main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Cache pip packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov black pylint mypy
+    
+    - name: Lint with pylint
+      run: |
+        pylint models/ utils/ scripts/ --exit-zero --max-line-length=120
+      continue-on-error: true
+    
+    - name: Format check with black
+      run: |
+        black --check models/ utils/ scripts/ --line-length=120
+      continue-on-error: true
+    
+    - name: Type check with mypy
+      run: |
+        mypy models/ utils/ --ignore-missing-imports
+      continue-on-error: true
+    
+    - name: Syntax validation
+      run: |
+        python -m py_compile models/*.py utils/*.py scripts/*.py
+    
+    - name: Run tests
+      run: |
+        pytest tests/ -v --cov=. --cov-report=xml
+      continue-on-error: true
+    
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      if: matrix.python-version == '3.10'
+      with:
+        files: ./coverage.xml
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build Docker image
+      run: |
+        docker build -t finalproject-group5:${{ github.sha }} .
+        docker tag finalproject-group5:${{ github.sha }} finalproject-group5:latest
+    
+    - name: Docker image info
+      run: |
+        docker images finalproject-group5
