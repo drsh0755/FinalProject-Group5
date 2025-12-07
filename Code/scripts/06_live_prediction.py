@@ -265,7 +265,7 @@ class UnifiedPredictor:
         end_date = pd.to_datetime(end_date)
         
         # Check if range is beyond historical data
-        if start_date > self.last_historical_date:
+        if end_date > self.last_historical_date:
             print(f"⚠️  Requested range is beyond historical data")
             print(f"   Historical ends: {self.last_historical_date.strftime('%Y-%m-%d')}")
             print(f"   Using LIVE data mode...\n")
