@@ -1,0 +1,47 @@
+# AWS EC2 G5 Instance Configuration for NVIDIA A10G GPU
+# Optimized hyperparameters for 24GB VRAM and Ampere Tensor Cores
+
+# Hardware-specific settings
+device: "cuda"
+use_amp: true  # Mixed precision for Tensor Cores
+cudnn_benchmark: true
+
+# Batch size optimized for A10G 24GB VRAM
+# Adjust based on sequence_length and hidden_dim
+batch_size: 64  # Can increase to 128 for smaller models
+eval_batch_size: 128
+gradient_accumulation_steps: 1
+
+# Data loading optimized for vCPU count
+# G5 instances: g5.xlarge (4 vCPU), g5.2xlarge (8 vCPU), etc.
+num_workers: 4  # Set to vCPU count / 2
+pin_memory: true
+prefetch_factor: 2
+persistent_workers: true
+
+# Model size (fits comfortably in 24GB VRAM)
+hidden_dim: 160  # Can use larger than standard
+lstm_layers: 3
+num_heads: 8
+dropout: 0.15
+
+# Sequence length
+sequence_length: 90  # Can handle longer sequences
+
+# Training hyperparameters
+learning_rate: 0.0008
+weight_decay: 0.00005
+grad_clip: 1.0
+
+# A10-specific optimizations
+tf32: true  # Use TensorFloat-32 for faster training
+channels_last: false  # Not applicable for sequence models
+
+# Memory management
+empty_cache_every: 10  # Empty cache every N batches if needed
+max_grad_norm: 1.0
+
+# Performance targets for A10G
+# Expected throughput: ~200-300 samples/sec for batch_size=64
+# Expected GPU utilization: >80%
+# Expected memory usage: 12-18GB / 24GB

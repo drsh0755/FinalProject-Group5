@@ -1,0 +1,16 @@
+{
+  "loss": 0.6887966862746647,
+  "accuracy": 0.548169014084507,
+  "precision": 0.548169014084507,
+  "recall": 1.0,
+  "f1": 0.7081513828238719,
+  "true_positives": 973,
+  "false_positives": 802,
+  "true_negatives": 0,
+  "false_negatives": 0,
+  "class_distribution": {
+    "class_0": 0.451830985915493,
+    "class_1": 0.548169014084507
+  },
+  "auc": 0.5
+}

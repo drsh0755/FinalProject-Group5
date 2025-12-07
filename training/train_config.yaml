@@ -1,0 +1,32 @@
+# Model architecture
+hidden_dim: 128  # Reduced from 128
+lstm_layers: 2  # Reduced from 2
+num_heads: 4    # Reduced from 4
+dropout: 0.3
+
+# Training hyperparameters
+epochs: 500    # Reduced from 200
+batch_size: 32  # Reduced from 64
+learning_rate: 0.0001  # Much lower
+weight_decay: 0.01
+optimizer: adamw
+grad_clip: 0.5  # Add gradient clipping
+
+# GPU optimization
+use_amp: true  # Disable mixed precision to avoid NaN
+
+# Learning rate scheduler
+scheduler: cosine
+min_lr: 0.00001
+
+# Early stopping
+patience: 40
+metric_to_monitor: f1
+
+# Logging
+log_interval: 1
+checkpoint_interval: 10
+
+# Data
+num_workers: 4
+pin_memory: true
