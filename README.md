@@ -624,5 +624,5 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 
 ***
 
-**Built with ❤️ using PyTorch
+**Built with ❤️ using PyTorch**
 
