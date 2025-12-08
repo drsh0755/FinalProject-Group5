@@ -21,20 +21,19 @@ This project implements a sophisticated multi-modal LSTM-based stock market pred
 ```
 Final-Project-Group5/
 │
-├── README.md                          # This file
-├── requirements.txt                   # Python dependencies
-├── Code/                              # All project code
-│   ├── scripts/                       # Production pipeline scripts
-│   │   ├── 01_download_data.py      # Yahoo Finance data collection
-│   │   ├── 02_download_news.py            # Alpha Vantage news fetching
-│   │   ├── 03_create_technical_features.py # Technical indicators (36+)
-│   │   ├── 04_merge_features.py           # Feature integration pipeline
-│   │   ├── 05_train_model.py              # LSTM model training
-│   │   ├── 06_live_predictions.py         # Real-time inference
-│   │   └── 07_verify_predictions.py       # Model validation
+├── README.md                                  # This file
+├── requirements.txt                           # Python dependencies
+├── Code/                                      # All project code
+│   ├── scripts/                               # Production pipeline scripts
+│   │   ├── 01_download_data.py                # Yahoo Finance data collection
+│   │   ├── 02_download_news.py                # Alpha Vantage news fetching
+│   │   ├── 03_create_technical_features.py    # Technical indicators (36+)
+│   │   ├── 04_merge_features.py               # Feature integration pipeline
+│   │   ├── 05_train_model.py                  # LSTM model training
+│   │   ├── 06_live_predictions.py             # Real-time inference
+│   │   └── 07_verify_predictions.py           # Model validation
 │   │
 │   ├── app.py                         # Streamlit dashboard application
-│   ```
 
 ## Installation & Setup
 
