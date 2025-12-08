@@ -30,11 +30,11 @@ Final-Project-Group5/
 │   │   ├── 03_create_technical_features.py    # Technical indicators (36+)
 │   │   ├── 04_merge_features.py               # Feature integration pipeline
 │   │   ├── 05_train_model.py                  # LSTM model training
-│   │   ├── 06_live_predictions.py             # Real-time inference
+│   │   ├── 06_live_prediction.py             # Real-time inference
 │   │   └── 07_verify_predictions.py           # Model validation
 │   │
 │   ├── app.py                         # Streamlit dashboard application
-
+```
 ## Installation & Setup
 
 ### Prerequisites
@@ -85,7 +85,7 @@ Execute scripts in numerical order:
 cd Code/scripts
 
 # Step 1: Download stock data
-python 01_download_stock_data.py
+python 01_download_data.py
 
 # Step 2: Fetch financial news
 python 02_download_news.py
@@ -100,7 +100,7 @@ python 04_merge_features.py
 python 05_train_model.py
 
 # Step 6: Generate live predictions
-python 06_live_predictions.py
+python 06_live_prediction.py
 
 # Step 7: Verify predictions
 python 07_verify_predictions.py
