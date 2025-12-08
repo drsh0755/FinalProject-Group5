@@ -15,11 +15,6 @@ This project implements a sophisticated multi-modal LSTM-based stock market pred
 - **Production-Ready Deployment:** AWS EC2 deployment with automated data pipelines
 - **Model Generalizability:** Demonstrated across multiple market indices (SPY, QQQ)
 
-### Performance Metrics
-- **SPY Model MAPE:** 7.87% (Target: <15%)
-- **Baseline Improvement:** 85% reduction in prediction error
-- **Architecture:** 2-layer LSTM (128 hidden units, dropout 0.4)
-- **Training Framework:** PyTorch with GPU acceleration
 
 ## Repository Structure
 
@@ -28,49 +23,18 @@ Final-Project-Group5/
 │
 ├── README.md                          # This file
 ├── requirements.txt                   # Python dependencies
-│
-├── Group-Proposal/                    # Initial project proposal
-│   └── Group5_Proposal.pdf
-│
-├── Final-Group-Project-Report/        # Comprehensive project report
-│   └── Group5_Final_Report.pdf
-│
-├── Final-Group-Presentation/          # Presentation materials
-│   └── Group5_Presentation.pdf
-│
 ├── Code/                              # All project code
 │   ├── scripts/                       # Production pipeline scripts
-│   │   ├── 01_download_stock_data.py      # Yahoo Finance data collection
+│   │   ├── 01_download_data.py      # Yahoo Finance data collection
 │   │   ├── 02_download_news.py            # Alpha Vantage news fetching
-│   │   ├── 03_process_news.py             # FinBERT sentiment analysis
-│   │   ├── 04_create_technical_features.py # Technical indicators (36+)
-│   │   ├── 05_merge_features.py           # Feature integration pipeline
-│   │   ├── 06_train_model.py              # LSTM model training
-│   │   ├── 07_live_predictions.py         # Real-time inference
-│   │   └── 08_verify_predictions.py       # Model validation
+│   │   ├── 03_create_technical_features.py # Technical indicators (36+)
+│   │   ├── 04_merge_features.py           # Feature integration pipeline
+│   │   ├── 05_train_model.py              # LSTM model training
+│   │   ├── 06_live_predictions.py         # Real-time inference
+│   │   └── 07_verify_predictions.py       # Model validation
 │   │
 │   ├── app.py                         # Streamlit dashboard application
-│   │
-│   ├── models/                        # Trained model artifacts
-│   │   ├── spy_lstm_model.pth
-│   │   ├── qqq_lstm_model.pth
-│   │   └── scalers/
-│   │
-│   ├── data/                          # Data storage
-│   │   ├── raw/                       # Original downloaded data
-│   │   ├── processed/                 # Processed features
-│   │   └── predictions/               # Model outputs
-│   │
-│   └── utils/                         # Helper functions
-│       ├── feature_engineering.py
-│       ├── data_loader.py
-│       └── visualization.py
-│
-└── Individual-Final-Project-Report/   # Individual contribution reports
-    ├── adarsh-individual-project/
-    ├── venkatesh-individual-project/
-    └── mayur-individual-project/
-```
+│   ```
 
 ## Installation & Setup
 
@@ -86,7 +50,7 @@ Final-Project-Group5/
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/yourusername/Final-Project-Group5.git
+git clone https://github.com/drsh0755/FinalProject-Group5.git
 cd Final-Project-Group5
 ```
 
@@ -127,23 +91,20 @@ python 01_download_stock_data.py
 # Step 2: Fetch financial news
 python 02_download_news.py
 
-# Step 3: Process news with sentiment analysis
-python 03_process_news.py
+# Step 3: Create technical indicators
+python 03_create_technical_features.py
 
-# Step 4: Create technical indicators
-python 04_create_technical_features.py
+# Step 4: Merge all features
+python 04_merge_features.py
 
-# Step 5: Merge all features
-python 05_merge_features.py
+# Step 5: Train the model
+python 05_train_model.py
 
-# Step 6: Train the model
-python 06_train_model.py
+# Step 6: Generate live predictions
+python 06_live_predictions.py
 
-# Step 7: Generate live predictions
-python 07_live_predictions.py
-
-# Step 8: Verify predictions
-python 08_verify_predictions.py
+# Step 7: Verify predictions
+python 07_verify_predictions.py
 ```
 
 ### Running the Streamlit Dashboard
@@ -175,7 +136,7 @@ To deploy on AWS EC2:
 ssh -i your-key.pem ubuntu@your-ec2-ip
 
 # Clone and setup
-git clone https://github.com/yourusername/Final-Project-Group5.git
+git clone https://github.com/drsh0755/FinalProject-Group5.git
 cd Final-Project-Group5
 pip install -r requirements.txt
 
@@ -191,40 +152,3 @@ Access via: `http://your-ec2-ip:8501`
 - **Target Achieved:** <15% MAPE threshold exceeded
 - **Features Used:** 36+ technical indicators + news sentiment
 - **Model Architecture:** 2-layer LSTM, 128 hidden units, dropout 0.4
-
-## Team Contributions
-
-### Adarsh
-- Multi-modal LSTM architecture design
-- AWS EC2 deployment and infrastructure
-- Streamlit dashboard development
-- Feature engineering pipeline
-
-### Venkatesh Nagarjuna
-- Data collection and preprocessing
-- Technical indicators implementation
-- Model training and optimization
-
-### Mayur Patil
-- News sentiment analysis integration
-- FinBERT implementation
-- Model validation and testing
-
-## References
-
-- **PyTorch Documentation:** https://pytorch.org/docs/
-- **Alpha Vantage API:** https://www.alphavantage.co/
-- **Yahoo Finance:** https://finance.yahoo.com/
-- **FinBERT:** ProsusAI/finbert (HuggingFace)
-- **Streamlit:** https://streamlit.io/
-
-## Contact
-
-For questions about this project, please contact:
-- **Adarsh:** [your-email]@gwu.edu
-- **Course:** DATS 6303 Deep Learning
-- **Instructor:** Dr. Amir Jafari (ajafari@gwu.edu)
-
-## License
-
-This project is submitted as coursework for DATS 6303 at George Washington University.
