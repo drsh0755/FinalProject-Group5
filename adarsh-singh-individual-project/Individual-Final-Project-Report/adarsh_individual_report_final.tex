@@ -1,0 +1,288 @@
+\documentclass[12pt,letterpaper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{natbib}
+
+% Title formatting
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+% Line spacing
+\onehalfspacing
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries Adarsh Individual Final Report\par}
+    \vspace{1cm}
+    {\Large DATS 6303 - Deep Learning\par}
+    \vspace{2cm}
+    {\Large Adarsh Singh | Group 5\par}
+    \vspace{0.5cm}
+    {\large December 8, 2025\par}
+    
+    \vfill
+\end{titlepage}
+
+
+
+\section{Introduction}
+
+\subsection{Project Overview}
+
+This project developed a multi-modal Long Short-Term Memory (LSTM) neural network for stock market prediction, targeting both SPY (S\&P 500 ETF) and QQQ (NASDAQ-100 ETF). The system integrates technical analysis with sentiment analysis from financial news to predict next-day closing prices. SPY represents the broad U.S. market across all industries, while QQQ focuses on technology-heavy NASDAQ companies. The multi-modal architecture processes 43 features for SPY and 49 features for QQQ, combining technical indicators derived from price/volume data with sentiment features extracted from financial news articles.
+
+\subsection{Development Approach}
+
+Development began with SPY as the primary target because it represents a diversified portfolio of 500 companies across all major industries, providing stable patterns for model training. Once SPY implementation was complete and validated, the entire pipeline was replicated for QQQ. QQQ was chosen for its narrower focus on technology companies, allowing demonstration that the architecture learns generalizable price dynamics rather than asset-specific patterns. This progression from broad market to sector-specific index validates model robustness across different market compositions.
+
+\subsection{Shared Work and Algorithm Development}
+
+I implemented the complete system for SPY including all seven production scripts, model training, and AWS deployment. I then replicated the entire pipeline for QQQ to demonstrate generalizability. Additionally, I developed the Streamlit demonstration application for the final presentation. Throughout the development process, AI assistants Claude and Gemini were used as coding tools.
+
+\subsubsection{LSTM Architecture Equations}
+
+The LSTM cell operations are governed by the following equations:
+
+\textbf{Forget gate:}
+\begin{equation}
+f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)
+\end{equation}
+
+\textbf{Input gate:}
+\begin{equation}
+i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i)
+\end{equation}
+
+\textbf{Candidate cell state:}
+\begin{equation}
+\tilde{c}_t = \tanh(W_c \cdot [h_{t-1}, x_t] + b_c)
+\end{equation}
+
+\textbf{Cell state update:}
+\begin{equation}
+c_t = f_t \odot c_{t-1} + i_t \odot \tilde{c}_t
+\end{equation}
+
+\textbf{Output gate:}
+\begin{equation}
+o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o)
+\end{equation}
+
+\textbf{Hidden state:}
+\begin{equation}
+h_t = o_t \odot \tanh(c_t)
+\end{equation}
+
+where $\sigma$ is the sigmoid function, $\odot$ denotes element-wise multiplication, $W$ are weight matrices, and $b$ are bias vectors.
+
+\subsubsection{Performance Metrics}
+
+\textbf{Mean Absolute Percentage Error (MAPE):}
+\begin{equation}
+\text{MAPE} = \frac{100}{n} \sum_{i=1}^{n} \frac{|y_i - \hat{y}_i|}{|y_i|}
+\end{equation}
+
+\textbf{Root Mean Square Error (RMSE):}
+\begin{equation}
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
+\end{equation}
+
+\textbf{Mean Absolute Error (MAE):}
+\begin{equation}
+\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|
+\end{equation}
+
+\section{Individual Work Description}
+
+\subsection{LSTM Architecture Background}
+
+Long Short-Term Memory networks address the vanishing gradient problem in traditional RNNs through specialized gating mechanisms. The LSTM cell maintains long-term memory through forget gates, input gates, and output gates, making it ideal for sequential financial data where both short-term fluctuations and long-term trends influence future prices. The architecture implemented uses 2 LSTM layers with 64 hidden units per layer, processing 30-day sequences to capture monthly trading patterns. This design balances model capacity with computational efficiency while preventing overfitting through dropout regularization.
+
+\subsection{Model Architecture and Training}
+
+The implemented 2-layer LSTM includes:
+
+\begin{itemize}[noitemsep]
+    \item Hidden size: 64 units per layer
+    \item Dropout: 0.4 (applied between layers and in fully-connected head)
+    \item Sequence length: 30 days (captures monthly patterns)
+    \item Batch size: 16
+    \item Learning rate: 0.0005 with ReduceLROnPlateau scheduler
+    \item Total parameters: 63,905 trainable parameters
+    \item Early stopping: Patience of 50 epochs (converged at epoch 55)
+\end{itemize}
+
+The architecture includes batch normalization after each fully-connected layer for training stability and a funnel design (64$\rightarrow$32$\rightarrow$16$\rightarrow$1) for progressive dimensionality reduction. Training utilized PyTorch with Adam optimizer and gradient clipping (max\_norm=1.0) to prevent exploding gradients.
+
+\subsection{Feature Engineering}
+
+Feature engineering differs between SPY (43 features) and QQQ (49 features):
+
+\textbf{SPY Features (43 total):} Technical indicators (36): Price-based (Open, High, Low, Volume), moving averages (SMA/EMA at 5, 10, 20, 50 days), MACD components, RSI, Bollinger Bands, momentum, volatility, volume indicators, price derivatives, and lag features. Sentiment features (7): mean, median, standard deviation, minimum, maximum, article count, positive ratio.
+
+\textbf{QQQ Features (49 total):} Includes all SPY features plus additional technical indicators specific to NASDAQ volatility patterns: Stochastic Oscillator, Williams \%R, Average Directional Index (ADX), Commodity Channel Index (CCI), On-Balance Volume (OBV), and Average True Range (ATR). These additional features capture the higher volatility and momentum characteristics of technology-focused stocks.
+
+\section{Detailed Implementation}
+
+\subsection{Complete Pipeline (7 Scripts)}
+
+Seven production Python scripts form the complete data-to-deployment pipeline:
+
+\begin{enumerate}[noitemsep]
+    \item \texttt{01\_download\_data.py}: Downloads historical stock data using yfinance API. Fetches 407 trading days from April 16, 2024 through November 26, 2025 with adjusted closing prices, volumes, and intraday ranges.
+    
+    \item \texttt{02\_download\_news.py}: Collects financial news with pre-computed sentiment scores from Alpha Vantage News Sentiment API. Aggregates articles from multiple tech companies as SPY/QQQ constituents.
+    
+    \item \texttt{03\_create\_technical\_features.py}: Calculates technical indicators (36 for SPY, 42 for QQQ) using pandas rolling operations and exponential moving averages.
+    
+    \item \texttt{04\_merge\_features.py}: Integrates technical and sentiment features with temporal alignment verification using inner joins on dates.
+    
+    \item \texttt{05\_train\_model.py}: Implements LSTM training with PyTorch including data normalization, sequence generation, train/val/test splitting, and early stopping.
+    
+    \item \texttt{06\_live\_prediction.py}: Real-time prediction system fetching live data from Yahoo Finance and Alpha Vantage, computing features on-the-fly, and generating predictions.
+    
+    \item \texttt{07\_verify\_predictions.py}: Automated verification comparing predictions against actual outcomes, calculating MAPE and direction accuracy.
+\end{enumerate}
+
+\subsection{AWS Deployment}
+
+The system was deployed on AWS EC2 g4dn.xlarge instance with NVIDIA T4 GPU (16GB VRAM). Deployment included CUDA/PyTorch setup, dependency installation, model loading with GPU acceleration, and automated daily prediction scheduling. GPU acceleration provides 3.2$\times$ speedup over CPU inference, enabling real-time predictions in under 5 seconds.
+
+\subsection{QQQ Replication}
+
+After completing SPY implementation, the entire seven-script pipeline was replicated for QQQ. This involved modifying ticker references, expanding technical indicators from 36 to 42 features, adjusting sentiment data sources to emphasize tech companies, updating file paths, and retraining the model from scratch on QQQ data. The identical LSTM architecture trained on QQQ's 49 features demonstrates the model's ability to learn generalizable patterns across different market compositions and feature sets.
+
+\subsection{Streamlit Demonstration Application}
+
+A comprehensive Streamlit application was developed and deployed on AWS for the final presentation. The application provides an interactive interface for demonstrating real-time predictions, visualizing historical performance, exploring model architecture and feature importance, and comparing SPY versus QQQ results. The interface successfully demonstrated live prediction capabilities and served as a functional application showcasing the complete system during the December 8th presentation.
+
+\section{Results}
+
+\subsection{SPY Performance Metrics}
+\begin{table}[h]
+\centering
+\caption{SPY Model Performance Across Training, Validation, and Test Sets}
+\vspace{0.2cm}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Train} & \textbf{Validation} & \textbf{Test} \\
+\midrule
+MAPE (\%) & 4.09 & 4.90 & 7.19 \\
+RMSE (\$) & 27.83 & 32.66 & 48.76 \\
+MAE (\$) & 23.37 & 31.02 & 48.07 \\
+\bottomrule
+\end{tabular}
+\label{tab:spy_performance}
+\end{table}
+\textbf{Dataset Information:}
+
+\begin{itemize}[noitemsep]
+    \item Date range: April 16, 2024 -- November 26, 2025
+    \item Total trading days: 407
+    \item Total sequences: 377 (after 30-day lookback)
+    \item Training samples: 263 (70\%)
+    \item Validation samples: 56 (15\%)
+    \item Test samples: 58 (15\%)
+    \item Input features: 43 (36 technical + 7 sentiment)
+\end{itemize}
+
+\subsection{Training Analysis}
+
+The model converged after 55 epochs with early stopping triggered at epoch 5 as the best validation performance. Training time was 3.85 seconds on GPU. The overfitting ratio (test MAPE / train MAPE) is 1.76, indicating acceptable generalization. Learning rate scheduling reduced the initial rate from 0.0005 to $1.95\times10^{-6}$ over training, enabling fine-grained optimization in later epochs.
+
+\subsection{Performance Summary}
+
+\begin{itemize}[noitemsep]
+    \item SPY achieved 7.19\% test MAPE, exceeding the 15\% target by 52.1\%
+    \item Average absolute error of \$48.07 on $\sim$\$670 stock price
+    \item Model parameters: 63,905 (compact and efficient)
+    \item GPU training time: 3.85 seconds (55 epochs)
+    \item Successfully replicated for QQQ demonstrating generalizability
+\end{itemize}
+
+\section{Summary and Conclusions}
+
+This project successfully developed a complete multi-modal LSTM system for stock market prediction achieving 7.19\% MAPE on SPY, significantly exceeding the 15\% target. The system processes 407 days of historical data (April 16, 2024 -- November 26, 2025) through seven production Python scripts covering data acquisition, feature engineering, model training, real-time prediction, and automated verification. Deployment on AWS EC2 with GPU acceleration enabled real-time predictions with sub-5-second latency. Successful replication for QQQ with expanded feature set (49 features) validates the architecture's generalizability across different market compositions. The Streamlit application successfully demonstrated live prediction capabilities during the final presentation.
+
+\subsection{Key Learnings}
+
+\begin{itemize}[noitemsep]
+    \item Multi-modal learning combining technical and sentiment features improves prediction accuracy
+    \item Temporal alignment between data sources is critical for multi-source systems
+    \item LSTM architecture with batch normalization and dropout prevents overfitting on financial data
+    \item GPU acceleration is essential for efficient deep learning model training and inference
+    \item End-to-end pipeline automation enables reproducible research and deployment
+\end{itemize}
+
+\subsection{Future Improvements}
+
+\begin{itemize}[noitemsep]
+    \item Incorporate additional data sources (social media sentiment, macroeconomic indicators)
+    \item Implement attention mechanisms for temporal feature weighting
+    \item Extend to multi-step prediction with uncertainty quantification
+    \item Test Transformer architectures for comparison with LSTM performance
+\end{itemize}
+
+\section{Percentage of Code from Internet/GenAI}
+
+\begin{table}[h]
+\centering
+\caption{Code Attribution}
+\vspace{0.2cm}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Component} & \textbf{Total Lines} & \textbf{Internet/GenAI} & \textbf{Modified} & \textbf{Own Code} \\
+\midrule
+SPY Pipeline Scripts & 1,988 & 1,550 & 290 & 148 \\
+Streamlit Demo App & 856 & 680 & 125 & 51 \\
+QQQ Pipeline Scripts & 1,289 & 1,020 & 180 & 89 \\
+\midrule
+\textbf{TOTAL} & \textbf{4,133} & \textbf{3,250} & \textbf{595} & \textbf{288} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{equation}
+\text{Percentage of Code from Internet/AI} = \frac{3250 - 595}{3250 + 288} \times 100 = 75.04\%
+\end{equation}
+
+The percentage of code from internet/GenAI (Claude and Gemini) is 75.04\%. This reflects extensive use of AI-assisted development tools, API documentation examples, and framework templates. The modified lines (595) represent adaptations and customizations made to fit project-specific requirements. The own code (288 lines) includes project-specific logic, integration code, and custom implementations.
+
+\section{References}
+
+\begin{enumerate}[noitemsep]
+    \item Hochreiter, S., \& Schmidhuber, J. (1997). Long Short-Term Memory. \textit{Neural Computation}, 9(8), 1735--1780.
+    
+    \item Yahoo Finance API (yfinance). Python Package Index. \url{https://pypi.org/project/yfinance/}
+    
+    \item Alpha Vantage News Sentiment API. \url{https://www.alphavantage.co/documentation/#news-sentiment}
+    
+    \item PyTorch Documentation. (2025). \url{https://pytorch.org/docs/stable/index.html}
+    
+    \item Streamlit Documentation. (2025). \url{https://docs.streamlit.io/}
+\end{enumerate}
+
+\end{document}
