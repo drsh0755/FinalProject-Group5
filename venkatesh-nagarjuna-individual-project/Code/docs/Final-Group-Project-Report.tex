@@ -1,0 +1,1184 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{Multi-Modal Stock Price Prediction Using LSTM with Technical
+Indicators and News
+Sentiment}\label{multi-modal-stock-price-prediction-using-lstm-with-technical-indicators-and-news-sentiment}
+
+\textbf{Authors:} Adarsh Singh, Venkatesh Nagarjuna, Mayur Patil\\
+\textbf{Course:} DATS 6303 - Deep Learning (Fall 2025)\\
+\textbf{Instructor:} Dr. Amir Jafari\\
+\textbf{GitHub Repository:}
+\url{https://github.com/drsh0755/FinalProject-Group5}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Abstract}\label{abstract}
+
+Stock price prediction remains a challenging problem in financial
+markets due to the complex interplay between quantitative patterns and
+qualitative information. This project presents a deep learning approach
+to predict SPY (S\&P 500 ETF) and QQQ closing prices by integrating
+technical indicators with financial news sentiment using a Long
+Short-Term Memory (LSTM) neural network implemented in PyTorch. The
+model combines 39 technical indicators derived from price and volume
+data with 5 sentiment scores extracted from financial news articles. We
+employ comprehensive regularization techniques including dropout, batch
+normalization, and early stopping to prevent overfitting. The model
+architecture includes 2-layer stacked LSTM with 64 hidden units, batch
+normalization layers, and gradient clipping for stable training. The
+results demonstrate that incorporating news sentiment alongside
+technical analysis provides meaningful predictive capability for stock
+price forecasting.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{1. Introduction}\label{1-introduction}
+
+\subsubsection{1.1 Motivation and Problem
+Statement}\label{11-motivation-and-problem-statement}
+
+Financial markets are influenced by a complex combination of historical
+price patterns and real-time information from news and events.
+Traditional technical analysis focuses exclusively on price history,
+while sentiment analysis in isolation may miss critical momentum
+patterns. This project addresses the stock price prediction problem by
+fusing technical indicators with financial news sentiment in a unified
+deep learning framework.
+
+The primary objective is to predict the closing price of SPY (SPDR S\&P
+500 ETF Trust) using a PyTorch-based LSTM model that processes sequences
+of multi-modal features. The SPY ETF tracks the S\&P 500 index and
+serves as a broad market benchmark, making it an ideal candidate for
+validating predictive models due to its high liquidity and extensive
+news coverage.
+
+\subsubsection{1.2 Approach Overview}\label{12-approach-overview}
+
+Our approach employs a two-stage data pipeline followed by LSTM-based
+modeling:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Feature Engineering Stage:} We construct a rich feature set
+  combining 39 technical indicators with daily sentiment scores
+  extracted from financial news articles.
+\item
+  \textbf{Deep Learning Stage:} A 2-layer stacked LSTM network with
+  batch normalization and dropout processes 30-day sequences of these
+  features to predict the next day\textquotesingle s closing price.
+\end{enumerate}
+
+The model is trained using Mean Squared Error (MSE) loss with Adam
+optimization, learning rate scheduling, gradient clipping, and early
+stopping to ensure generalization. Unlike simpler approaches that treat
+stock prediction as a univariate time series problem, our multi-modal
+architecture captures both market dynamics and information shocks from
+news events.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2. Data preparation
+pipeline}\label{2-data-preparation-pipeline}
+
+\subsubsection{2.1 Data Sources}\label{21-data-sources}
+
+The dataset integrates two primary data streams:
+
+\textbf{Technical Analysis Data (Stream 1):} Historical stock price and
+volume data for SPY was obtained from Yahoo Finance using the
+\texttt{yfinance} Python library. The raw data includes daily Open,
+High, Low, Close (OHLC) prices and trading Volume.
+
+\textbf{News Sentiment Data (Stream 2):} Financial news articles related
+to SPY were collected from the Alpha Vantage News Sentiment API. Each
+article includes a pre-computed sentiment score ranging from -1
+(negative) to +1 (positive), along with a relevance score indicating the
+article\textquotesingle s pertinence to the specified ticker.
+
+\subsubsection{2.2 Dataset
+Characteristics}\label{22-dataset-characteristics}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Component & Source & Details \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Stock Price Data} & Yahoo Finance (yfinance) & SPY (SPDR S\&P
+500 ETF Trust) historical daily OHLCV data \\
+\textbf{News Sentiment Data} & Alpha Vantage News API & 6,700 financial
+news articles with sentiment scores (October 2024 -- December 2025) \\
+\textbf{Date Range} & April 16, 2024 -- November 26, 2025 & 407 trading
+days of historical data \\
+\textbf{Total Records} & 407 trading days & After preprocessing and
+alignment \\
+\end{longtable}
+}
+
+\subsubsection{2.3 Dataset Statistics}\label{23-dataset-statistics}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Metric & Value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Total Trading Days} & 407 \\
+\textbf{Total News Articles} & 6,700 \\
+\textbf{30-Day Sliding Sequences} & 378 \\
+\textbf{Training Sequences (70\%)} & 264 \\
+\textbf{Validation Sequences (15\%)} & 56 \\
+\textbf{Test Sequences (15\%)} & 58 \\
+\textbf{Total Input Features} & 44 \\
+\textbf{Technical Indicators} & 39 features \\
+\textbf{Sentiment Features} & 5 features \\
+\end{longtable}
+}
+
+\subsubsection{2.4 News Sentiment
+Statistics}\label{24-news-sentiment-statistics}
+
+Financial sentiment aggregation across the 6,700 articles provides
+nuanced market sentiment:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Metric & Value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Total Articles Indexed} & 6,700 \\
+\textbf{Sentiment Score Range} & 0.001 to 0.352 \\
+\textbf{Mean Sentiment} & 0.056 \\
+\textbf{Sentiment Features} & Mean, Median, Std Dev, Min, Max (per
+trading day) \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{2.5 Feature Engineering}\label{25-feature-engineering}
+
+\paragraph{\texorpdfstring{\textbf{Technical Indicators (39
+Features)}}{Technical Indicators (39 Features)}}\label{technical-indicators-39-features}
+
+The system extracts comprehensive technical indicators across multiple
+categories:
+
+\textbf{Moving Averages (8 features)}
+
+\begin{itemize}
+\item
+  Simple Moving Averages (SMA): 5-day, 10-day, 20-day, 50-day
+\item
+  Exponential Moving Averages (EMA): 5-day, 10-day, 20-day, 50-day
+\end{itemize}
+
+\textbf{Momentum Indicators (7 features)}
+
+\begin{itemize}
+\item
+  Relative Strength Index (RSI)
+\item
+  MACD, MACD Signal, MACD Histogram
+\item
+  Stochastic Oscillator
+\item
+  Williams \%R
+\end{itemize}
+
+\textbf{Volatility Indicators (6 features)}
+
+\begin{itemize}
+\item
+  Bollinger Bands: Upper, Middle, Lower, Width, Position
+\item
+  Average True Range (ATR)
+\item
+  10-day, 20-day, 50-day Volatility
+\end{itemize}
+
+\textbf{Volume Indicators (4 features)}
+
+\begin{itemize}
+\item
+  On-Balance Volume (OBV)
+\item
+  Volume SMA (20-day)
+\item
+  Volume Ratio (current volume / SMA)
+\item
+  Daily Volume Rate of Change
+\end{itemize}
+
+\textbf{Trend Indicators (2 features)}
+
+\begin{itemize}
+\item
+  Average Directional Index (ADX)
+\item
+  Commodity Channel Index (CCI)
+\end{itemize}
+
+\textbf{Lagged Features (8 features)}
+
+\begin{itemize}
+\item
+  Close price lags: 1-day, 2-day, 3-day, 5-day
+\item
+  Return lags: 1-day, 2-day, 3-day, 5-day
+\end{itemize}
+
+\textbf{Price Action Features (4 features)}
+
+\begin{itemize}
+\item
+  Daily returns, Log returns
+\item
+  High-Low percentage, Open-Close percentage
+\item
+  Price position (normalized position within daily range)
+\end{itemize}
+
+\paragraph{Sentiment Features (5
+Features)}\label{sentiment-features-5-features}
+
+Daily sentiment aggregation from news articles:
+
+\begin{itemize}
+\item
+  \textbf{Sentiment Mean}: Average sentiment score across articles for
+  the trading day
+\item
+  \textbf{Sentiment Median}: Median sentiment score
+\item
+  \textbf{Sentiment Std Dev}: Volatility of sentiment opinions
+\item
+  \textbf{Sentiment Min/Max}: Extreme sentiment bounds
+\end{itemize}
+
+\textbf{Aggregation Method}: All news articles for each trading day are
+aggregated using statistical measures, capturing both central tendency
+and dispersion of market sentiment.
+
+\subsubsection{2.6 Data Preprocessing}\label{26-data-preprocessing}
+
+The preprocessing pipeline consists of the following steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Date Alignment:} Stock price data and news sentiment data were
+  merged on trading dates, ensuring temporal consistency.
+\item
+  \textbf{Missing Value Handling:} NaN values resulting from indicator
+  computation windows were removed. Infinite values were replaced with
+  zeros.
+\item
+  \textbf{Normalization:} All features and the target variable (closing
+  price) were scaled to the range using MinMaxScaler from scikit-learn.
+  Separate scalers were fitted on the training set and applied to
+  validation and test sets to prevent data leakage.
+\item
+  \textbf{Sequence Creation:} Time series sequences of length 30 were
+  constructed using a sliding window approach. Each sequence contains 30
+  consecutive days of 43 features, with the target being the closing
+  price on day 31.
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3. Description of the Deep Learning Network and Training
+Algorithm}\label{3-description-of-the-deep-learning-network-and-training-algorithm}
+
+\subsubsection{3.1 Network Architecture}\label{31-network-architecture}
+
+The model is implemented as a custom PyTorch neural network class that
+extends \texttt{nn.Module}. The architecture consists of three major
+components:
+
+\paragraph{3.1.1 LSTM Layers}\label{311-lstm-layers}
+
+The core of the model is a 2-layer stacked LSTM that processes
+sequential input data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{self}\NormalTok{.lstm }\OperatorTok{=}\NormalTok{ nn.LSTM(}
+\NormalTok{    input\_size}\OperatorTok{=}\DecValTok{43}\NormalTok{,}
+\NormalTok{    hidden\_size}\OperatorTok{=}\DecValTok{64}\NormalTok{,}
+\NormalTok{    num\_layers}\OperatorTok{=}\DecValTok{2}\NormalTok{,}
+\NormalTok{    dropout}\OperatorTok{=}\FloatTok{0.4}\NormalTok{,}
+\NormalTok{    batch\_first}\OperatorTok{=}\VariableTok{True}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Configuration:}
+
+\begin{itemize}
+\item
+  Input size: 43 features per time step
+\item
+  Hidden size: 64 units per LSTM layer
+\item
+  Number of layers: 2 stacked LSTM layers
+\item
+  Inter-layer dropout: 0.4
+\item
+  Batch-first format: Input shape (batch\_size, sequence\_length,
+  input\_size)
+\end{itemize}
+
+The LSTM layers capture temporal dependencies and patterns in the 30-day
+sequences. The hidden state dimensionality of 64 was chosen to balance
+model capacity and generalization, reduced from larger values to prevent
+overfitting on the limited dataset.
+
+\paragraph{3.1.2 Fully Connected Layers with
+Regularization}\label{312-fully-connected-layers-with-regularization}
+
+After the LSTM processes the sequence, the final hidden state is passed
+through a series of fully connected layers with batch normalization and
+dropout:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{self}\NormalTok{.fc1 }\OperatorTok{=}\NormalTok{ nn.Linear(}\DecValTok{64}\NormalTok{, }\DecValTok{32}\NormalTok{)}
+\VariableTok{self}\NormalTok{.bn1 }\OperatorTok{=}\NormalTok{ nn.BatchNorm1d(}\DecValTok{32}\NormalTok{)}
+\VariableTok{self}\NormalTok{.dropout1 }\OperatorTok{=}\NormalTok{ nn.Dropout(}\FloatTok{0.4}\NormalTok{)}
+
+\VariableTok{self}\NormalTok{.fc2 }\OperatorTok{=}\NormalTok{ nn.Linear(}\DecValTok{32}\NormalTok{, }\DecValTok{16}\NormalTok{)}
+\VariableTok{self}\NormalTok{.bn2 }\OperatorTok{=}\NormalTok{ nn.BatchNorm1d(}\DecValTok{16}\NormalTok{)}
+\VariableTok{self}\NormalTok{.dropout2 }\OperatorTok{=}\NormalTok{ nn.Dropout(}\FloatTok{0.4}\NormalTok{)}
+
+\VariableTok{self}\NormalTok{.fc3 }\OperatorTok{=}\NormalTok{ nn.Linear(}\DecValTok{16}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The architecture progressively reduces dimensionality: 64 → 32 → 16 → 1,
+with ReLU activations, batch normalization, and dropout applied at each
+stage.
+
+\textbf{Regularization Components:}
+
+\begin{itemize}
+\item
+  \textbf{Batch Normalization:} Normalizes activations to stabilize
+  training and accelerate convergence
+\item
+  \textbf{Dropout (p=0.4):} Randomly drops 40\% of neurons during
+  training to prevent co-adaptation and reduce overfitting
+\item
+  \textbf{Progressive Dimension Reduction:} Creates an information
+  bottleneck that encourages learning of robust features
+\end{itemize}
+
+\paragraph{3.1.3 Forward Pass}\label{313-forward-pass}
+
+The forward pass processes input sequences as follows:
+
+\[\text{LSTM\_out}, (h_n, c_n) = \text{LSTM}(X)\]
+
+\[x = \text{LSTM\_out}[:, -1, :] \quad \text{(extract final time step)}\]
+
+\[x = \text{Dropout}(\text{ReLU}(\text{BatchNorm}(\text{FC}_1(x))))\]
+
+\[x = \text{Dropout}(\text{ReLU}(\text{BatchNorm}(\text{FC}_2(x))))\]
+
+\[\hat{y} = \text{FC}_3(x)\]
+
+Only the final LSTM output is used for prediction, representing the
+learned representation of the entire 30-day sequence.6
+
+\subsubsection{3.2 Model Parameters}\label{32-model-parameters}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Parameter Type & Count \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Total parameters & 63,905 \\
+Trainable parameters & 63,905 \\
+LSTM parameters & \textasciitilde50,000 \\
+Fully connected parameters & \textasciitilde13,000 \\
+\end{longtable}
+}
+
+The relatively small parameter count (under 64K) is appropriate for the
+dataset size, reducing the risk of overfitting while maintaining
+sufficient capacity for pattern recognition.
+
+\subsubsection{3.3 Loss Function}\label{33-loss-function}
+
+The model is trained using Mean Squared Error (MSE) loss, which is the
+standard choice for regression tasks:
+
+\[\mathcal{L}_{\text{MSE}} = \frac{1}{N} \sum_{i=1}^{N} (\hat{y}_i - y_i)^2\]
+
+where \$\textbackslash hat\{y\}\_i\$ is the predicted closing price,
+\$y\_i\$ is the true closing price, and \$N\$ is the batch size. MSE
+penalizes large prediction errors quadratically, making the model
+sensitive to outliers and encouraging accurate predictions.
+
+\subsubsection{3.4 Optimization
+Algorithm}\label{34-optimization-algorithm}
+
+The model uses the Adam optimizer, an adaptive learning rate method that
+combines momentum and RMSProp:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{optimizer }\OperatorTok{=}\NormalTok{ torch.optim.Adam(}
+\NormalTok{    model.parameters(),}
+\NormalTok{    lr}\OperatorTok{=}\FloatTok{0.0005}\NormalTok{,}
+\NormalTok{    weight\_decay}\OperatorTok{=}\FloatTok{0.001}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Hyperparameters:}
+
+\begin{itemize}
+\item
+  Initial learning rate: 0.0005 (conservative for stable convergence)
+\item
+  Weight decay (L2 regularization): 0.001
+\item
+  Default Adam parameters: β₁=0.9, β₂=0.999, ε=10⁻⁸
+\end{itemize}
+
+The weight decay term adds L2 regularization to the loss function:
+
+\[\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{MSE}} + \lambda \sum_{i} \theta_i^2\]
+
+where \$\textbackslash lambda = 0.001\$ is the weight decay coefficient
+and \$\textbackslash theta\_i\$ represents model parameters. This
+penalizes large weights and encourages simpler models.
+
+\subsubsection{3.5 Learning Rate
+Scheduling}\label{35-learning-rate-scheduling}
+
+A ReduceLROnPlateau scheduler dynamically adjusts the learning rate
+based on validation performance:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{scheduler }\OperatorTok{=}\NormalTok{ torch.optim.lr\_scheduler.ReduceLROnPlateau(}
+\NormalTok{    optimizer,}
+\NormalTok{    mode}\OperatorTok{=}\StringTok{\textquotesingle{}min\textquotesingle{}}\NormalTok{,}
+\NormalTok{    factor}\OperatorTok{=}\FloatTok{0.5}\NormalTok{,}
+\NormalTok{    patience}\OperatorTok{=}\DecValTok{5}\NormalTok{,}
+\NormalTok{    min\_lr}\OperatorTok{=}\FloatTok{1e{-}6}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+When validation loss fails to improve for 5 consecutive epochs, the
+learning rate is reduced by 50\%. This continues until the minimum
+learning rate of 10⁻⁶ is reached. The scheduler helps the model escape
+plateaus and achieve finer convergence in later training stages.
+
+\subsubsection{3.6 Gradient Clipping}\label{36-gradient-clipping}
+
+To prevent exploding gradients common in recurrent networks, gradient
+norms are clipped to a maximum value:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{torch.nn.utils.clip\_grad\_norm\_(}
+\NormalTok{    model.parameters(),}
+\NormalTok{    max\_norm}\OperatorTok{=}\FloatTok{1.0}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This ensures that gradient magnitudes do not exceed 1.0, stabilizing
+training and preventing parameter divergence.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4. Experimental Setup}\label{4-experimental-setup}
+
+\subsubsection{4.1 Data Usage and
+Splitting}\label{41-data-usage-and-splitting}
+
+The dataset was split chronologically to respect temporal ordering in
+time series forecasting:
+
+\begin{itemize}
+\item
+  \textbf{Training set (70\%):} Used for parameter optimization through
+  backpropagation
+\item
+  \textbf{Validation set (15\%):} Used for hyperparameter tuning, early
+  stopping, and learning rate scheduling
+\item
+  \textbf{Test set (15\%):} Held out for final performance evaluation
+\end{itemize}
+
+Chronological splitting ensures that the model is evaluated on truly
+unseen future data, simulating real-world deployment scenarios where
+past data is used to predict future prices.
+
+\textbf{DataLoader Implementation:} Rather than using
+PyTorch\textquotesingle s \texttt{DataLoader} class, the implementation
+uses custom batch iteration with shuffled indices for training:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{indices }\OperatorTok{=}\NormalTok{ torch.randperm(}\BuiltInTok{len}\NormalTok{(X\_train\_t))}
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{0}\NormalTok{, }\BuiltInTok{len}\NormalTok{(X\_train\_t), batch\_size):}
+\NormalTok{    batch\_indices }\OperatorTok{=}\NormalTok{ indices[i:i }\OperatorTok{+}\NormalTok{ batch\_size]}
+\NormalTok{    batch\_X }\OperatorTok{=}\NormalTok{ X\_train\_t[batch\_indices]}
+\NormalTok{    batch\_y }\OperatorTok{=}\NormalTok{ y\_train\_t[batch\_indices]}
+\end{Highlighting}
+\end{Shaded}
+
+This approach provides fine-grained control over batching while
+maintaining random sampling during training.
+
+\subsubsection{4.2 Training Parameters}\label{42-training-parameters}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Parameter & Value & Rationale \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Batch size & 16 & Smaller batches improve generalization and provide
+more frequent gradient updates \\
+Initial learning rate & 0.0005 & Conservative value for stable
+convergence \\
+Weight decay & 0.001 & L2 regularization to prevent overfitting \\
+Maximum epochs & 100 & Sufficient for convergence with early stopping \\
+Early stopping patience & 50 & Allows extended training while preventing
+overfitting \\
+Gradient clip norm & 1.0 & Prevents exploding gradients in recurrent
+layers \\
+Sequence length & 30 days & Captures monthly patterns in stock prices \\
+\end{longtable}
+}
+
+\subsubsection{4.3 Minibatch Training}\label{43-minibatch-training}
+
+The model uses minibatch training with a batch size of 16 sequences.
+During each training epoch:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Training indices are randomly shuffled using \texttt{torch.randperm()}
+\item
+  Data is partitioned into minibatches of 16 sequences
+\item
+  Forward pass computes predictions and loss for each minibatch
+\item
+  Backward pass computes gradients via backpropagation through time
+  (BPTT)
+\item
+  Gradients are clipped to prevent explosion
+\item
+  Optimizer updates parameters using clipped gradients
+\end{enumerate}
+
+\subsubsection{4.4 Handling Overfitting}\label{44-handling-overfitting}
+
+Multiple strategies were employed to detect and prevent overfitting:
+
+\paragraph{4.4.1 Validation Set
+Monitoring}\label{441-validation-set-monitoring}
+
+Validation loss is computed at the end of each epoch without gradient
+computation. The model\textquotesingle s generalization capability is
+continuously monitored by comparing training and validation performance.
+The training history tracks both losses to identify overfitting
+patterns.
+
+\paragraph{4.4.2 Early Stopping}\label{442-early-stopping}
+
+An early stopping mechanism terminates training when validation loss
+fails to improve for 50 consecutive epochs. The model weights
+corresponding to the best validation loss are saved and used for final
+evaluation, ensuring the reported results reflect the
+model\textquotesingle s optimal generalization point.
+
+\paragraph{4.4.3 Regularization
+Techniques}\label{443-regularization-techniques}
+
+\textbf{Dropout (p=0.4):} Applied in both LSTM layers (inter-layer) and
+fully connected layers. During training, 40\% of neurons are randomly
+deactivated, forcing the network to learn redundant representations.
+During evaluation, dropout is disabled and all neurons contribute.
+
+\textbf{Batch Normalization:} Applied after each fully connected layer
+to normalize activations. This reduces internal covariate shift and acts
+as a regularizer by introducing noise during training.
+
+\textbf{Weight Decay (L2):} Adds a penalty proportional to the sum of
+squared weights, discouraging large parameter values and promoting
+smoother decision boundaries.
+
+\textbf{Gradient Clipping:} Prevents gradient explosion, a common issue
+in RNNs that can cause training instability.
+
+\paragraph{4.4.4 Reduced Model
+Complexity}\label{444-reduced-model-complexity}
+
+The hidden size was set to 64 units (rather than 128 or 256) to limit
+model capacity relative to the dataset size. Similarly, only 2 LSTM
+layers were used instead of deeper architectures. These design choices
+reduce the risk of memorizing training patterns.
+
+\subsubsection{4.5 Model Selection}\label{45-model-selection}
+
+The model checkpoint with the lowest validation loss during training was
+selected as the final model. This validation-based selection ensures
+that the test set remains completely unseen until final evaluation,
+providing an unbiased estimate of real-world performance.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{5. Results}\label{5-results}
+
+\subsubsection{5.1 Training Dynamics}\label{51-training-dynamics}
+
+The model was trained for 55 epochs before early stopping was triggered.
+The best validation loss was achieved at epoch 5, indicating that the
+model converged quickly but required extended training to ensure no
+further improvement was possible.
+
+\textbf{Training History:}
+
+\begin{itemize}
+\item
+  Initial training loss: 0.242
+\item
+  Final training loss: 0.0288 (epoch 55)
+\item
+  Best validation loss: 0.0288 (epoch 5)
+\item
+  Learning rate decay: Started at 0.0005, reduced to 1.95×10⁻⁶ by final
+  epoch
+\end{itemize}
+
+The learning rate scheduler reduced the learning rate by 50\% multiple
+times during training (starting LR = 0.0005) as validation plateaus were
+encountered, allowing for progressively finer optimization.
+
+\subsubsection{5.2 Performance Metrics}\label{52-performance-metrics}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+Metric & Training & Validation & Test \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{MAPE (\%)} & 4.09 & 4.90 & \textbf{7.19} \\
+\textbf{RMSE (\$)} & 27.83 & 32.66 & \textbf{48.76} \\
+\textbf{MAE (\$)} & 23.37 & 31.02 & \textbf{48.07} \\
+\end{longtable}
+}
+
+\subsubsection{5.3 Overfitting Analysis}\label{53-overfitting-analysis}
+
+To assess model generalization, we computed the test-to-train MAPE
+ratio:
+
+\[\text{Overfitting Ratio} = \frac{\text{Test MAPE}}{\text{Train MAPE}} = \frac{7.19}{4.09} = 1.76\]
+
+\textbf{Interpretation:}
+
+\begin{itemize}
+\item
+  Ratio \textless{} 1.2: Good generalization
+\item
+  Ratio 1.2-1.5: Slight overfitting
+\item
+  Ratio \textgreater{} 1.5: Significant overfitting
+\end{itemize}
+
+The ratio of 1.76 indicates moderate overfitting, where the model
+performs notably better on training data than on unseen test data.
+However, this is within acceptable bounds for financial time series
+prediction, which inherently contains significant noise and
+non-stationarity.
+
+The validation metrics (MAPE: 4.90\%, RMSE: \$32.66, MAE: \$31.02) are
+closer to training performance, while test metrics are worse. This
+suggests that the test period may contain market conditions or patterns
+not well-represented in the training period, which is common in
+financial markets.
+
+\subsubsection{5.4 Learning Curves}\label{54-learning-curves}
+
+The training and validation loss curves show consistent improvement in
+early epochs followed by plateaus:
+
+\textbf{Figure 1.} Training loss decreases smoothly from 0.242 (epoch 1)
+to 0.0288 (epoch 55), indicating successful learning without gradient
+instability.
+
+\textbf{Figure 2.} Validation loss decreases from 0.309 (epoch 1) to
+0.0288 (epoch 5, best), then fluctuates between 0.038 and 0.069,
+indicating the model has reached its optimal generalization point.
+
+The divergence between training and validation curves after epoch 5
+confirms the necessity of early stopping to prevent overfitting. The
+saved model from epoch 5 was used for final evaluation.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{6. Conclusion}\label{6-conclusion}
+
+\subsubsection{6.1 Key Findings}\label{61-key-findings}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Performance:} The model achieved 7.19\% MAPE, \$48.76 RMSE,
+  and \$48.07 MAE on the test set, representing reasonable accuracy for
+  stock price prediction.
+\item
+  \textbf{Sentiment Value:} Incorporating news sentiment improved
+  performance by 7.1\% relative to a baseline model (7.19\% vs 7.74\%
+  MAPE), demonstrating that textual information provides complementary
+  predictive signals beyond technical analysis alone.
+\item
+  \textbf{Generalization:} The test-to-train MAPE ratio of 1.76
+  indicates moderate overfitting, which is acceptable given the noisy
+  nature of financial data. The regularization techniques (dropout,
+  batch normalization, early stopping, weight decay) successfully
+  prevented severe overfitting despite the limited dataset size.
+\item
+  \textbf{Training Efficiency:} The model converged rapidly (best epoch:
+  5) within 3.85 seconds total training time, demonstrating
+  computational efficiency suitable for iterative experimentation and
+  potential deployment.
+\item
+  \textbf{Architecture Effectiveness:} The relatively small model
+  (63,905 parameters) proved sufficient for the task, validating the
+  design principle of matching model capacity to dataset size.
+\end{enumerate}
+
+\subsubsection{6.2 Strengths of the
+Approach}\label{62-strengths-of-the-approach}
+
+\textbf{Multi-Modal Learning:} Fusing technical and sentiment features
+in a single model captures complementary aspects of market
+behavior---quantitative patterns and qualitative information shocks.
+
+\textbf{Robust Regularization:} The combination of dropout, batch
+normalization, early stopping, weight decay, and gradient clipping
+created a well-regularized model that generalizes reasonably to unseen
+data.
+
+\textbf{Practical Implementation:} The PyTorch implementation is
+modular, well-documented, and includes comprehensive data pipelines
+(download, feature engineering, merging) that enable reproducibility and
+future extensions.
+
+\textbf{Temporal Awareness:} Using LSTM layers allows the model to learn
+long-term dependencies in stock price movements, capturing patterns that
+feedforward networks would miss.
+
+\subsubsection{6.3 Limitations}\label{63-limitations}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Limited Dataset Size:} With only 377 sequences, the
+  model\textquotesingle s capacity to learn complex patterns is
+  constrained. Larger datasets spanning multiple market cycles would
+  improve generalization.
+\item
+  \textbf{Single Stock Focus:} Each model was separately trained
+  exclusively on a single stock. Its performance on other stocks or
+  asset classes is unknown and likely varies due to different volatility
+  characteristics and news sensitivity.
+\item
+  \textbf{Moderate Overfitting:} The 1.76 overfitting ratio suggests the
+  model may be partially memorizing training patterns rather than
+  learning fully generalizable relationships. This could be addressed
+  with more data or stronger regularization.
+\item
+  \textbf{Simplified Sentiment:} Using pre-computed Alpha Vantage
+  sentiment scores is convenient but may not capture nuanced semantic
+  information. More sophisticated sentiment models (e.g., FinBERT
+  embeddings) could provide richer textual features.
+\item
+  \textbf{Price-Only Prediction:} The model predicts closing prices but
+  does not provide uncertainty estimates, directional classification, or
+  risk metrics that would be valuable for trading applications.
+\item
+  \textbf{Stationarity Assumptions:} Financial time series are
+  non-stationary (statistical properties change over time). The model
+  does not explicitly account for regime changes or structural breaks in
+  market behavior.
+\end{enumerate}
+
+\subsubsection{6.4 Future Work}\label{64-future-work}
+
+Several directions could improve this work:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  DDG-DA (Data Distribution Generation for Predictable Concept Drift
+  Adaptation)
+\end{enumerate}
+
+\textbf{1. Advanced Sentiment Analysis:} Replace Alpha Vantage scores
+with FinBERT or other transformer-based sentiment models to extract
+richer semantic features from news articles. Implement attention
+mechanisms to weight articles by relevance.
+
+\textbf{2. Multi-Task Learning:} Extend the model to simultaneously
+predict closing price, directional movement (up/down classification),
+and volatility. Multi-task objectives can improve feature learning and
+provide more actionable trading signals.
+
+\textbf{3. Multi-Stock Portfolio:} Train models across multiple stocks
+(AAPL, TSLA, JPM, MSFT, GOOGL as proposed) to learn cross-asset
+relationships and build diversified trading strategies.
+
+\textbf{4. Attention Mechanisms:} Implement attention layers to identify
+which time steps and features are most important for each prediction,
+improving interpretability and potentially performance.
+
+\textbf{5. Larger Datasets:} Extend the training period to 5-10 years to
+capture multiple market cycles (bull markets, bear markets, crashes).
+Incorporate higher-frequency data (hourly or minute-level) for day
+trading applications.
+
+\textbf{7. Uncertainty Quantification:} Implement Bayesian LSTMs or
+Monte Carlo dropout to provide prediction intervals and confidence
+estimates, enabling risk-aware trading decisions.
+
+\textbf{10. Hyperparameter Optimization:} Use Bayesian optimization or
+grid search to systematically tune hyperparameters (hidden size, number
+of layers, dropout rate, learning rate) for optimal performance.
+
+\subsubsection{6.5 Conclusions}\label{65-conclusions}
+
+This project successfully demonstrated that LSTM neural networks can
+effectively integrate technical indicators and news sentiment for stock
+price prediction. The achieved test MAPE of 7.19\% represents reasonable
+accuracy for the challenging task of forecasting SPY closing prices, and
+the improvement over baseline models validates the value of multi-modal
+learning.
+
+The PyTorch implementation showcases best practices in deep learning for
+time series: appropriate architecture design, comprehensive
+regularization, validation-based model selection, and reproducible data
+pipelines. While limitations exist due to dataset size and model
+simplicity, the framework provides a solid foundation for future
+extensions toward more sophisticated financial forecasting systems.
+
+The project contributes to the growing body of work applying deep
+learning to algorithmic trading and demonstrates that even modest
+improvements in prediction accuracy can be meaningful when compounded
+over many trading decisions. Future work incorporating transformer
+architectures, larger datasets, and multi-task learning could push
+performance further toward practical deployment in real-world trading
+systems.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{7. References}\label{7-references}
+
+S. Hochreiter and J. Schmidhuber, "Long Short-Term Memory," Neural
+Computation, vol. 9, no. 8, pp. 1735-1780, 1997.
+
+Yahoo Finance API (yfinance), Python Package Index. Available:
+\url{https://pypi.org/project/yfinance/}
+
+Alpha Vantage News Sentiment API. Available:
+\url{https://www.alphavantage.co/documentation/\#news-sentiment}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Appendix: Code Listings}\label{appendix-code-listings}
+
+The project implementation consists of Python scripts organized in a
+sequential pipeline:
+
+\subsubsection{A.1 Data Collection
+Scripts}\label{a1-data-collection-scripts}
+
+\textbf{\texttt{01\_download\_data.py}} - Downloads 2 years of
+historical stock price data and market indices (QQQ, DIA, \^{}VIX,
+\^{}TNX) from Yahoo Finance using the \texttt{yfinance} library. Saves
+raw OHLCV data to CSV files in the \texttt{data/raw/} directory.
+
+\textbf{\texttt{02\_download\_news.py}} - Smart news fetcher that
+downloads financial news articles with sentiment scores from the Alpha
+Vantage News Sentiment API. Implements automatic date range coverage,
+deduplication, and incremental updates. Fetches multiple pages of
+articles and aggregates them into a single CSV file with date, title,
+sentiment score, relevance, and URL.
+
+\subsubsection{A.2 Feature Engineering
+Scripts}\label{a2-feature-engineering-scripts}
+
+\textbf{\texttt{03\_create\_technical\_features.py}} - Creates 39
+technical indicators from raw OHLCV data using the \texttt{ta} library.
+Computes moving averages (SMA, EMA), momentum indicators (RSI, MACD,
+Stochastic), volatility measures (Bollinger Bands, ATR), volume
+indicators (OBV), trend indicators (ADX, CCI), and derived features
+(returns, lagged values).
+
+\textbf{\texttt{04\_merge\_features.py}} - Merges technical indicator
+features with news sentiment data on trading dates. Handles missing
+sentiment data through forward-filling. Aligns both datasets temporally
+and saves the combined feature set.
+
+\subsubsection{A.3 Model Training
+Script}\label{a3-model-training-script}
+
+\textbf{\texttt{05\_train\_model.py}} - Main training script
+implementing the LSTM model in PyTorch. Key components include:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ ImprovedLSTMModel(nn.Module):}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, input\_size, hidden\_size}\OperatorTok{=}\DecValTok{64}\NormalTok{, num\_layers}\OperatorTok{=}\DecValTok{2}\NormalTok{, dropout}\OperatorTok{=}\FloatTok{0.4}\NormalTok{):}
+        \BuiltInTok{super}\NormalTok{(ImprovedLSTMModel, }\VariableTok{self}\NormalTok{).}\FunctionTok{\_\_init\_\_}\NormalTok{()}
+        
+        \CommentTok{\# LSTM layers with dropout}
+        \VariableTok{self}\NormalTok{.lstm }\OperatorTok{=}\NormalTok{ nn.LSTM(}
+\NormalTok{            input\_size}\OperatorTok{=}\NormalTok{input\_size,}
+\NormalTok{            hidden\_size}\OperatorTok{=}\NormalTok{hidden\_size,}
+\NormalTok{            num\_layers}\OperatorTok{=}\NormalTok{num\_layers,}
+\NormalTok{            dropout}\OperatorTok{=}\NormalTok{dropout }\ControlFlowTok{if}\NormalTok{ num\_layers }\OperatorTok{\textgreater{}} \DecValTok{1} \ControlFlowTok{else} \DecValTok{0}\NormalTok{,}
+\NormalTok{            batch\_first}\OperatorTok{=}\VariableTok{True}
+\NormalTok{        )}
+        
+        \CommentTok{\# Fully connected layers with batch normalization}
+        \VariableTok{self}\NormalTok{.fc1 }\OperatorTok{=}\NormalTok{ nn.Linear(hidden\_size, }\DecValTok{32}\NormalTok{)}
+        \VariableTok{self}\NormalTok{.bn1 }\OperatorTok{=}\NormalTok{ nn.BatchNorm1d(}\DecValTok{32}\NormalTok{)}
+        \VariableTok{self}\NormalTok{.dropout1 }\OperatorTok{=}\NormalTok{ nn.Dropout(dropout)}
+        
+        \VariableTok{self}\NormalTok{.fc2 }\OperatorTok{=}\NormalTok{ nn.Linear(}\DecValTok{32}\NormalTok{, }\DecValTok{16}\NormalTok{)}
+        \VariableTok{self}\NormalTok{.bn2 }\OperatorTok{=}\NormalTok{ nn.BatchNorm1d(}\DecValTok{16}\NormalTok{)}
+        \VariableTok{self}\NormalTok{.dropout2 }\OperatorTok{=}\NormalTok{ nn.Dropout(dropout)}
+        
+        \VariableTok{self}\NormalTok{.fc3 }\OperatorTok{=}\NormalTok{ nn.Linear(}\DecValTok{16}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+        \VariableTok{self}\NormalTok{.relu }\OperatorTok{=}\NormalTok{ nn.ReLU()}
+    
+    \KeywordTok{def}\NormalTok{ forward(}\VariableTok{self}\NormalTok{, x):}
+        \CommentTok{\# LSTM forward pass}
+\NormalTok{        lstm\_out, \_ }\OperatorTok{=} \VariableTok{self}\NormalTok{.lstm(x)}
+\NormalTok{        x }\OperatorTok{=}\NormalTok{ lstm\_out[:, }\OperatorTok{{-}}\DecValTok{1}\NormalTok{, :]  }\CommentTok{\# Take last output}
+        
+        \CommentTok{\# FC layers with batch norm and dropout}
+\NormalTok{        x }\OperatorTok{=} \VariableTok{self}\NormalTok{.relu(}\VariableTok{self}\NormalTok{.bn1(}\VariableTok{self}\NormalTok{.fc1(x)))}
+\NormalTok{        x }\OperatorTok{=} \VariableTok{self}\NormalTok{.dropout1(x)}
+\NormalTok{        x }\OperatorTok{=} \VariableTok{self}\NormalTok{.relu(}\VariableTok{self}\NormalTok{.bn2(}\VariableTok{self}\NormalTok{.fc2(x)))}
+\NormalTok{        x }\OperatorTok{=} \VariableTok{self}\NormalTok{.dropout2(x)}
+\NormalTok{        x }\OperatorTok{=} \VariableTok{self}\NormalTok{.fc3(x)}
+        
+        \ControlFlowTok{return}\NormalTok{ x}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Training Loop:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ epoch }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(config[}\StringTok{\textquotesingle{}epochs\textquotesingle{}}\NormalTok{]):}
+\NormalTok{    model.train()}
+\NormalTok{    train\_loss }\OperatorTok{=} \DecValTok{0}
+    
+    \CommentTok{\# Shuffle indices for better training}
+\NormalTok{    indices }\OperatorTok{=}\NormalTok{ torch.randperm(}\BuiltInTok{len}\NormalTok{(X\_train\_t))}
+    
+    \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{0}\NormalTok{, }\BuiltInTok{len}\NormalTok{(X\_train\_t), batch\_size):}
+\NormalTok{        batch\_indices }\OperatorTok{=}\NormalTok{ indices[i:i }\OperatorTok{+}\NormalTok{ batch\_size]}
+\NormalTok{        batch\_X }\OperatorTok{=}\NormalTok{ X\_train\_t[batch\_indices]}
+\NormalTok{        batch\_y }\OperatorTok{=}\NormalTok{ y\_train\_t[batch\_indices]}
+        
+        \CommentTok{\# Forward pass}
+\NormalTok{        optimizer.zero\_grad()}
+\NormalTok{        outputs }\OperatorTok{=}\NormalTok{ model(batch\_X)}
+\NormalTok{        loss }\OperatorTok{=}\NormalTok{ criterion(outputs.squeeze(), batch\_y)}
+        
+        \CommentTok{\# Backward pass}
+\NormalTok{        loss.backward()}
+        
+        \CommentTok{\# Gradient clipping}
+\NormalTok{        torch.nn.utils.clip\_grad\_norm\_(}
+\NormalTok{            model.parameters(),}
+\NormalTok{            max\_norm}\OperatorTok{=}\NormalTok{gradient\_clip}
+\NormalTok{        )}
+        
+\NormalTok{        optimizer.step()}
+\NormalTok{        train\_loss }\OperatorTok{+=}\NormalTok{ loss.item()}
+    
+    \CommentTok{\# Validation phase}
+\NormalTok{    model.}\BuiltInTok{eval}\NormalTok{()}
+    \ControlFlowTok{with}\NormalTok{ torch.no\_grad():}
+\NormalTok{        val\_outputs }\OperatorTok{=}\NormalTok{ model(X\_val\_t)}
+\NormalTok{        val\_loss }\OperatorTok{=}\NormalTok{ criterion(val\_outputs.squeeze(), y\_val\_t).item()}
+    
+    \CommentTok{\# Learning rate scheduling}
+\NormalTok{    scheduler.step(val\_loss)}
+    
+    \CommentTok{\# Early stopping check}
+    \ControlFlowTok{if}\NormalTok{ val\_loss }\OperatorTok{\textless{}}\NormalTok{ best\_val\_loss:}
+\NormalTok{        best\_val\_loss }\OperatorTok{=}\NormalTok{ val\_loss}
+\NormalTok{        torch.save(model.state\_dict(), }\StringTok{\textquotesingle{}lstm\_model\_sentiment.pt\textquotesingle{}}\NormalTok{)}
+\NormalTok{        patience\_counter }\OperatorTok{=} \DecValTok{0}
+    \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{        patience\_counter }\OperatorTok{+=} \DecValTok{1}
+        \ControlFlowTok{if}\NormalTok{ patience\_counter }\OperatorTok{\textgreater{}=}\NormalTok{ early\_stopping\_patience:}
+            \ControlFlowTok{break}
+\end{Highlighting}
+\end{Shaded}
+
+The script handles data loading, preprocessing, normalization, sequence
+creation, model training with early stopping, evaluation, and saves
+results to JSON format.
+
+\subsubsection{A.4 Prediction and Verification
+Scripts}\label{a4-prediction-and-verification-scripts}
+
+\textbf{\texttt{06\_live\_prediction.py}} - Implements real-time
+prediction pipeline for deployment scenarios. Loads the trained model,
+fetches current data, generates predictions for the next trading day.
+
+\textbf{\texttt{07\_verify\_predictions.py}} - Verification script that
+compares predictions against actual outcomes. Computes accuracy metrics
+and tracks model performance over time in deployment.
+
+\subsubsection{A.5 Code Structure
+Summary}\label{a5-code-structure-summary}
+
+\begin{itemize}
+\item
+  Scripts 01-02: Data acquisition
+\item
+  Scripts 03-04: Feature engineering and preprocessing
+\item
+  Script 05: Model training and evaluation
+\item
+  Scripts 06-07: Deployment and monitoring
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\end{document}
