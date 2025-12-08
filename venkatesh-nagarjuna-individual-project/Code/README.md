@@ -16,9 +16,13 @@ This system predicts next-day direction (UP/DOWN) for top tech stocks (AAPL, MSF
 ### Key Features
 
 ✅ **End-to-End Pipeline**: Data ingestion → Feature engineering → Training → Deployment
+
 ✅ **Mixed Precision Training**: Leverages A10 Tensor Cores for 2-3x speedup
+
 ✅ **Interpretability**: Attention weights and feature importance visualization
+
 ✅ **Production-Ready**: Docker support, logging, monitoring, checkpointing
+
 ✅ **Adaptive Learning**: DDG-DA handles market regime changes
 
 ***
